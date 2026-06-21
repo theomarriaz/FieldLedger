@@ -1,1 +1,3001 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<title>FieldLedger</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="FieldLedger">
+<meta name="theme-color" content="#17181C">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAACy0lEQVR4nO3dv4uPARzA8SNdndnlBpvcoISS1UZMuFtRlEX5E2SzG5UFi/JrU0K50hUDUYqMBhvWm2y6dG+57u774+712u7p2/N8hnefnp5v3+e27Z7ZMwEr2T7sARhd4iCJgyQOkjhI4iCJgyQOkjhI4iCJgyQOkjhI4iCJgyQOkjhI4iCJgyQOkjhI4iCJgyQOkjhI4iCJgyQOkjhI4iCJgyQO0o4BXOPLpzeTk5MDuNBa/Pj56/CRY8uPbPTYFy5eebXweuPOv3Y2B0kcJHGQxEEaxA3p7P6jKx7/9HFx59TU/5/n0uWrL14urNNQE8+ePpzdt/cfH1ivsc/Mn3/3/sPqhhsNNgdJHCRxkMRBEgdJHCRxkMRBGsRDsNF0/OTcsEcYdTYHSRwkcZDEQdrMN6RPHt49dPDAnz+Xlpbqi1ZWZHOQxEESB0kcJHGQxEESB2mcnnPcvnVz2CNsLTYHSRwkcZDEQRqnG9LV/hzyry/eWC2bgyQOkjhI4iCJgyQOkjhI4/ScY7VOz50b9gjjzeYgiYMkDpI4SOIgiYMkDtJmfs6xyUxP73q7+Hz5kTv37l+7fmPjrmhzkMRBEgdJHCRxkMRBEgdJHCRxkMbpP1L/+xUMJ07Nf/7yde1X+WO9xn784M7aTzIUNgdJHCRxkMRB2rZ7Zs+wZ2BE2RwkcZDEQRIHSRwkcZDEQRIHSRwkcZDEQRIHSRwkcZDEQRIHSRwkcZDEQRIHSRwkcZDEQRrQqya/n/02mAttHTOPNvwHRzYHSRwkcZDEQRIHSRwkcZDEQfLyFpLNQRIHSRwkcZDEQRIHSRwkcZDEQRIHSRwkcZDEQRIHSRwkcZDEQRIHSRwkcZDEQRIHSRwkcZDEQRIHSRwkcZDEQRIHSRwkcZDEQRIHSRwkcZDEQRIHSRwkcZDEQRIHSRwkcZDEQRIHSRwkcZDEQRIH6TdLKULw9J9fMgAAAABJRU5ErkJggg==">
+<link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAACy0lEQVR4nO3dv4uPARzA8SNdndnlBpvcoISS1UZMuFtRlEX5E2SzG5UFi/JrU0K50hUDUYqMBhvWm2y6dG+57u774+712u7p2/N8hnefnp5v3+e27Z7ZMwEr2T7sARhd4iCJgyQOkjhI4iCJgyQOkjhI4iCJgyQOkjhI4iCJgyQOkjhI4iCJgyQOkjhI4iCJgyQOkjhI4iCJgyQOkjhI4iCJgyQO0o4BXOPLpzeTk5MDuNBa/Pj56/CRY8uPbPTYFy5eebXweuPOv3Y2B0kcJHGQxEEaxA3p7P6jKx7/9HFx59TU/5/n0uWrL14urNNQE8+ePpzdt/cfH1ivsc/Mn3/3/sPqhhsNNgdJHCRxkMRBEgdJHCRxkMRBGsRDsNF0/OTcsEcYdTYHSRwkcZDEQdrMN6RPHt49dPDAnz+Xlpbqi1ZWZHOQxEESB0kcJHGQxEESB2mcnnPcvnVz2CNsLTYHSRwkcZDEQRqnG9LV/hzyry/eWC2bgyQOkjhI4iCJgyQOkjhI4/ScY7VOz50b9gjjzeYgiYMkDpI4SOIgiYMkDtJmfs6xyUxP73q7+Hz5kTv37l+7fmPjrmhzkMRBEgdJHCRxkMRBEgdJHCRxkMbpP1L/+xUMJ07Nf/7yde1X+WO9xn784M7aTzIUNgdJHCRxkMRB2rZ7Zs+wZ2BE2RwkcZDEQRIHSRwkcZDEQRIHSRwkcZDEQRIHSRwkcZDEQRIHSRwkcZDEQRIHSRwkcZDEQRrQqya/n/02mAttHTOPNvwHRzYHSRwkcZDEQRIHSRwkcZDEQfLyFpLNQRIHSRwkcZDEQRIHSRwkcZDEQRIHSRwkcZDEQRIHSRwkcZDEQRIHSRwkcZDEQRIHSRwkcZDEQRIHSRwkcZDEQRIHSRwkcZDEQRIHSRwkcZDEQRIHSRwkcZDEQRIHSRwkcZDEQRIHSRwkcZDEQRIH6TdLKULw9J9fMgAAAABJRU5ErkJggg==">
+<style>
+  html,body{margin:0;padding:0;background:#0E1512;-webkit-text-size-adjust:100%;}
+  #boot{font-family:-apple-system,system-ui,sans-serif;color:#9FB0AC;text-align:center;padding:80px 20px;}
+</style>
+</head>
+<body>
+<div id="root"><div id="boot">Loading FieldLedger…</div></div>
+
+<!-- React + Babel (run the app in the browser, no build step) -->
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<!-- Save data on this device (replaces the in-app storage) -->
+<script>
+  window.storage = {
+    async get(key){ const v = localStorage.getItem(key); return v===null ? null : {key, value:v}; },
+    async set(key,value){ try{ localStorage.setItem(key, value); return {key,value}; }catch(e){ return null; } },
+    async delete(key){ localStorage.removeItem(key); return {key, deleted:true}; },
+    async list(prefix=''){ const keys=[]; for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i); if(k.startsWith(prefix)) keys.push(k);} return {keys}; },
+  };
+</script>
+
+<script type="text/babel" data-presets="react">
+const { useState, useEffect, useMemo } = React;
+
+
+
+// ---------- Design tokens: hi-vis field-ops palette ----------
+const T = {
+  bg: "#F2F4F3",        // concrete
+  card: "#FFFFFF",
+  ink: "#16201F",       // gunmetal ink
+  sub: "#5C6B68",       // faded stencil
+  line: "#DDE3E1",
+  in: "#1A7A4A",        // money green
+  out: "#C2452D",       // rust red
+  hivis: "#FF6A00",     // safety orange — signature accent
+  hivisSoft: "#FFF0E5",
+  inkSoft: "#E8ECEA",
+};
+const font = {
+  display: "-apple-system, 'Helvetica Neue', system-ui, sans-serif",
+  body: "-apple-system, system-ui, 'Segoe UI', sans-serif",
+  num: "-apple-system, 'Helvetica Neue', system-ui, sans-serif",
+};
+
+const uid = () => Math.random().toString(36).slice(2, 9);
+const byName = (a, b) => (a.name || "").localeCompare(b.name || "");
+const todayStr = () => new Date().toISOString().slice(0, 10);
+const monthStr = (d = new Date()) => d.toISOString().slice(0, 7);
+const fmt = (n) =>
+  (n < 0 ? "-$" : "$") +
+  Math.abs(n).toLocaleString("en-US", { maximumFractionDigits: 0 });
+const fmtC = (n) =>
+  (n < 0 ? "-$" : "$") +
+  Math.abs(n).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+const parseDateFlexible = (s) => {
+  if (!s) return null;
+  const t = s.trim();
+  if (/^\d{4}-\d{2}-\d{2}/.test(t)) return t.slice(0, 10);
+  const m = t.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2,4})/);
+  if (m) {
+    const y = m[3].length === 2 ? "20" + m[3] : m[3];
+    return `${y}-${m[1].padStart(2, "0")}-${m[2].padStart(2, "0")}`;
+  }
+  return null;
+};
+
+// ---------- Seed data: imported from Project Chronos timesheet ----------
+function seed() {
+  const crew = [
+    { id: 'c1', name: 'Nurudeen Usman', rate: 18, casual: true, active: true, jobId: 'j13' },
+    { id: 'c2', name: 'Daniel Yakubu', rate: 18, casual: true, active: true, jobId: 'j3' },
+    { id: 'c3', name: 'Joey Corneli', rate: 25, casual: false, active: true, jobId: 'j13' },
+    { id: 'c4', name: 'Richard Opoku Forson', rate: 55, casual: false, active: true, jobId: 'j4' },
+    { id: 'c5', name: 'Victor Jalbert', rate: 85, casual: false, active: true, jobId: 'j13' },
+    { id: 'c6', name: 'Victor Veliz', rate: 34, casual: false, active: true, jobId: 'j5' },
+    { id: 'c7', name: 'Ethan McCuiston', rate: 65, casual: false, active: true, jobId: 'j4' },
+    { id: 'c8', name: 'Jacob Gyasi', rate: 18, casual: true, active: true, jobId: 'j14' },
+    { id: 'c9', name: 'Adams Luckman', rate: 18, casual: true, active: true, jobId: 'j6' },
+    { id: 'c10', name: 'Alfred Ankomah', rate: 18, casual: true, active: true, jobId: 'j1' },
+    { id: 'c11', name: 'Abubakar Aboagye', rate: 18, casual: true, active: true, jobId: 'j1' },
+    { id: 'c12', name: 'Roman Slobodian', rate: 36, casual: false, active: false, jobId: 'j4' },
+    { id: 'c13', name: 'Collins Aduamoah', rate: 18, casual: true, active: true, jobId: 'j16' },
+    { id: 'c14', name: 'Noah Demers', rate: 83, casual: false, active: true, contractor: true, jobId: 'j7' },
+  ];
+  const jobs = [
+    { id: 'j1', name: 'Bordeaux', client: '', address: '2335 rue de Bordeaux, Montreal, QC', revenue: 82500, status: 'active', start: '2026-04-16', end: '2026-06-17', expenses: [], changes: [] },
+    { id: 'j2', name: 'Valais', client: '', address: '2838 Rue du Valais, Laval, QC', revenue: 0, status: 'active', start: '2026-04-19', end: '2026-06-07', expenses: [], changes: [] },
+    { id: 'j3', name: 'St. Joseph', client: '', address: '352 Boulevard Saint-Joseph O, Montreal, QC', revenue: 0, status: 'active', start: '2026-04-23', end: '2026-05-01', expenses: [], changes: [] },
+    { id: 'j4', name: 'Nicolet', client: '', address: '1800 Rue Nicolet, Montreal, QC', revenue: 0, status: 'active', start: '2026-04-30', end: '2026-06-19', expenses: [], changes: [] },
+    { id: 'j5', name: 'Finchley', client: '', address: '195 Finchley, Montreal, QC', revenue: 26092.63, status: 'active', start: '2026-05-01', end: '2026-06-19', expenses: [], changes: [] },
+    { id: 'j6', name: 'Porto Mar', client: '', address: 'Porto Mar, Montreal, QC', revenue: 0, status: 'active', start: '2026-05-07', end: '2026-05-08', expenses: [], changes: [] },
+    { id: 'j7', name: 'Jean-beraud', client: '', address: 'Jean-Beraud, Laval, QC', revenue: 15000, status: 'active', start: '2026-05-11', end: '2026-06-17', expenses: [], changes: [] },
+    { id: 'j8', name: 'O\'Bryan', client: '', address: 'O\'Brien Street, Montreal, QC', revenue: 0, status: 'active', start: '2026-05-11', end: '2026-05-25', expenses: [], changes: [] },
+    { id: 'j9', name: 'St. Urbain', client: '', address: 'Rue Saint-Urbain, Montreal, QC', revenue: 0, status: 'active', start: '2026-05-12', end: '2026-06-11', expenses: [], changes: [] },
+    { id: 'j10', name: 'Quebec', client: '', address: 'Rue Quebec, Montreal, QC', revenue: 0, status: 'active', start: '2026-05-13', end: '2026-05-14', expenses: [], changes: [] },
+    { id: 'j11', name: 'St. Antoine', client: '', address: 'Rue Saint-Antoine, Montreal, QC', revenue: 0, status: 'active', start: '2026-05-25', end: '2026-05-25', expenses: [], changes: [] },
+    { id: 'j12', name: 'Casgrain', client: '', address: 'Rue Casgrain, Montreal, QC', revenue: 0, status: 'active', start: '2026-05-30', end: '2026-05-30', expenses: [], changes: [] },
+    { id: 'j13', name: 'Oriole', client: '', address: 'Oriole, Montreal, QC', revenue: 7861.82, status: 'active', start: '2026-06-03', end: '2026-06-20', expenses: [], changes: [] },
+    { id: 'j14', name: 'Golf', client: '', address: 'Rue Golf, Montreal, QC', revenue: 0, status: 'active', start: '2026-06-09', end: '2026-06-20', expenses: [], changes: [] },
+    { id: 'j15', name: 'Montarville', client: '', address: 'Rue Montarville, Saint-Bruno, QC', revenue: 0, status: 'active', start: '2026-06-16', end: '2026-06-16', expenses: [], changes: [] },
+    { id: 'j16', name: 'Cressy', client: '', address: 'Cressy, QC', revenue: 0, status: 'active', start: '2026-06-17', end: '2026-06-17', expenses: [], changes: [] },
+    { id: 'j17', name: 'Chateau Beau Rivage', client: '', address: 'Chateau Beau Rivage, QC', revenue: 0, status: 'active', start: '2026-06-18', end: '2026-06-18', expenses: [], changes: [] },
+    { id: 'j18', name: 'Gouin Est', client: '', address: 'Boulevard Gouin Est, Montreal, QC', revenue: 0, status: 'active', start: '2026-06-18', end: '2026-06-18', expenses: [], changes: [] },
+  ];
+  const timeEntries = [
+    { id: 't1', crewId: 'c1', jobId: 'j1', hours: 5, date: '2026-04-16' },
+    { id: 't2', crewId: 'c2', jobId: 'j1', hours: 4.5, date: '2026-04-16' },
+    { id: 't3', crewId: 'c3', jobId: 'j2', hours: 10, date: '2026-04-19' },
+    { id: 't4', crewId: 'c4', jobId: 'j2', hours: 10, date: '2026-04-21' },
+    { id: 't5', crewId: 'c4', jobId: 'j2', hours: 8, date: '2026-04-22' },
+    { id: 't6', crewId: 'c4', jobId: 'j1', hours: 8, date: '2026-04-23' },
+    { id: 't7', crewId: 'c2', jobId: 'j3', hours: 6, date: '2026-04-23' },
+    { id: 't8', crewId: 'c1', jobId: 'j1', hours: 4, date: '2026-04-25' },
+    { id: 't9', crewId: 'c5', jobId: 'j1', hours: 9, date: '2026-04-27' },
+    { id: 't10', crewId: 'c5', jobId: 'j1', hours: 8, date: '2026-04-28' },
+    { id: 't11', crewId: 'c4', jobId: 'j1', hours: 5, date: '2026-04-28' },
+    { id: 't12', crewId: 'c6', jobId: 'j1', hours: 7.5, date: '2026-04-27' },
+    { id: 't13', crewId: 'c6', jobId: 'j1', hours: 8.5, date: '2026-04-28' },
+    { id: 't14', crewId: 'c4', jobId: 'j1', hours: 9, date: '2026-04-27' },
+    { id: 't15', crewId: 'c5', jobId: 'j1', hours: 8, date: '2026-04-29' },
+    { id: 't16', crewId: 'c4', jobId: 'j1', hours: 10.5, date: '2026-04-29' },
+    { id: 't17', crewId: 'c7', jobId: 'j4', hours: 8, date: '2026-04-30' },
+    { id: 't18', crewId: 'c5', jobId: 'j4', hours: 8, date: '2026-04-30' },
+    { id: 't19', crewId: 'c6', jobId: 'j1', hours: 6.5, date: '2026-04-29' },
+    { id: 't20', crewId: 'c6', jobId: 'j1', hours: 7.5, date: '2026-04-30' },
+    { id: 't21', crewId: 'c4', jobId: 'j3', hours: 8, date: '2026-04-30' },
+    { id: 't22', crewId: 'c7', jobId: 'j4', hours: 8, date: '2026-05-01' },
+    { id: 't23', crewId: 'c4', jobId: 'j3', hours: 10, date: '2026-05-01' },
+    { id: 't24', crewId: 'c5', jobId: 'j5', hours: 9, date: '2026-05-01' },
+    { id: 't25', crewId: 'c6', jobId: 'j1', hours: 4, date: '2026-05-01' },
+    { id: 't26', crewId: 'c4', jobId: 'j5', hours: 9.5, date: '2026-05-04' },
+    { id: 't27', crewId: 'c5', jobId: 'j5', hours: 9, date: '2026-05-04' },
+    { id: 't28', crewId: 'c4', jobId: 'j5', hours: 8, date: '2026-05-05' },
+    { id: 't29', crewId: 'c5', jobId: 'j5', hours: 8, date: '2026-05-05' },
+    { id: 't30', crewId: 'c4', jobId: 'j5', hours: 8, date: '2026-05-06' },
+    { id: 't31', crewId: 'c4', jobId: 'j6', hours: 9, date: '2026-05-07' },
+    { id: 't32', crewId: 'c8', jobId: 'j6', hours: 5.5, date: '2026-05-07' },
+    { id: 't33', crewId: 'c9', jobId: 'j6', hours: 3.5, date: '2026-05-07' },
+    { id: 't34', crewId: 'c10', jobId: 'j1', hours: 7, date: '2026-05-01' },
+    { id: 't35', crewId: 'c11', jobId: 'j1', hours: 6, date: '2026-05-01' },
+    { id: 't36', crewId: 'c7', jobId: 'j4', hours: 8, date: '2026-05-08' },
+    { id: 't37', crewId: 'c5', jobId: 'j6', hours: 10.5, date: '2026-05-07' },
+    { id: 't38', crewId: 'c5', jobId: 'j6', hours: 11, date: '2026-05-08' },
+    { id: 't39', crewId: 'c5', jobId: 'j5', hours: 8.5, date: '2026-05-06' },
+    { id: 't40', crewId: 'c4', jobId: 'j6', hours: 11, date: '2026-05-08' },
+    { id: 't41', crewId: 'c6', jobId: 'j5', hours: 8, date: '2026-05-06' },
+    { id: 't42', crewId: 'c6', jobId: 'j5', hours: 7.5, date: '2026-05-07' },
+    { id: 't43', crewId: 'c6', jobId: 'j5', hours: 8, date: '2026-05-08' },
+    { id: 't44', crewId: 'c4', jobId: 'j7', hours: 8, date: '2026-05-11' },
+    { id: 't45', crewId: 'c3', jobId: 'j8', hours: 7, date: '2026-05-11' },
+    { id: 't46', crewId: 'c6', jobId: 'j5', hours: 8, date: '2026-05-11' },
+    { id: 't47', crewId: 'c3', jobId: 'j8', hours: 6.5, date: '2026-05-12' },
+    { id: 't48', crewId: 'c4', jobId: 'j7', hours: 8, date: '2026-05-12' },
+    { id: 't49', crewId: 'c3', jobId: 'j5', hours: 3.5, date: '2026-05-13' },
+    { id: 't50', crewId: 'c4', jobId: 'j4', hours: 10, date: '2026-05-13' },
+    { id: 't51', crewId: 'c7', jobId: 'j4', hours: 8, date: '2026-05-14' },
+    { id: 't52', crewId: 'c4', jobId: 'j4', hours: 9, date: '2026-05-14' },
+    { id: 't53', crewId: 'c5', jobId: 'j8', hours: 10, date: '2026-05-11' },
+    { id: 't54', crewId: 'c5', jobId: 'j8', hours: 10, date: '2026-05-12' },
+    { id: 't55', crewId: 'c5', jobId: 'j8', hours: 9, date: '2026-05-14' },
+    { id: 't56', crewId: 'c3', jobId: 'j5', hours: 4.5, date: '2026-05-15' },
+    { id: 't57', crewId: 'c7', jobId: 'j4', hours: 8, date: '2026-05-15' },
+    { id: 't58', crewId: 'c4', jobId: 'j4', hours: 8, date: '2026-05-15' },
+    { id: 't59', crewId: 'c5', jobId: 'j8', hours: 7, date: '2026-05-15' },
+    { id: 't60', crewId: 'c4', jobId: 'j4', hours: 8, date: '2026-05-19' },
+    { id: 't61', crewId: 'c12', jobId: 'j4', hours: 9, date: '2026-05-19' },
+    { id: 't62', crewId: 'c3', jobId: 'j8', hours: 7, date: '2026-05-19' },
+    { id: 't63', crewId: 'c5', jobId: 'j8', hours: 7, date: '2026-05-19' },
+    { id: 't64', crewId: 'c12', jobId: 'j4', hours: 9, date: '2026-05-20' },
+    { id: 't65', crewId: 'c3', jobId: 'j8', hours: 9, date: '2026-05-20' },
+    { id: 't66', crewId: 'c5', jobId: 'j8', hours: 9.5, date: '2026-05-20' },
+    { id: 't67', crewId: 'c6', jobId: 'j9', hours: 9, date: '2026-05-12' },
+    { id: 't68', crewId: 'c6', jobId: 'j10', hours: 8, date: '2026-05-13' },
+    { id: 't69', crewId: 'c6', jobId: 'j10', hours: 9.5, date: '2026-05-14' },
+    { id: 't70', crewId: 'c6', jobId: 'j5', hours: 9, date: '2026-05-15' },
+    { id: 't71', crewId: 'c6', jobId: 'j5', hours: 9, date: '2026-05-19' },
+    { id: 't72', crewId: 'c6', jobId: 'j5', hours: 9, date: '2026-05-20' },
+    { id: 't73', crewId: 'c4', jobId: 'j4', hours: 8, date: '2026-05-20' },
+    { id: 't74', crewId: 'c4', jobId: 'j4', hours: 8, date: '2026-05-21' },
+    { id: 't75', crewId: 'c12', jobId: 'j4', hours: 9, date: '2026-05-21' },
+    { id: 't76', crewId: 'c5', jobId: 'j5', hours: 8, date: '2026-05-21' },
+    { id: 't77', crewId: 'c6', jobId: 'j5', hours: 8, date: '2026-05-21' },
+    { id: 't78', crewId: 'c12', jobId: 'j4', hours: 8, date: '2026-05-22' },
+    { id: 't79', crewId: 'c5', jobId: 'j5', hours: 8.5, date: '2026-05-22' },
+    { id: 't80', crewId: 'c4', jobId: 'j4', hours: 8, date: '2026-05-22' },
+    { id: 't81', crewId: 'c6', jobId: 'j5', hours: 7.5, date: '2026-05-22' },
+    { id: 't82', crewId: 'c4', jobId: 'j4', hours: 8, date: '2026-05-23' },
+    { id: 't83', crewId: 'c4', jobId: 'j4', hours: 8, date: '2026-05-25' },
+    { id: 't84', crewId: 'c12', jobId: 'j4', hours: 9, date: '2026-05-25' },
+    { id: 't85', crewId: 'c6', jobId: 'j5', hours: 8.5, date: '2026-05-25' },
+    { id: 't86', crewId: 'c3', jobId: 'j11', hours: 6, date: '2026-05-25' },
+    { id: 't87', crewId: 'c5', jobId: 'j8', hours: 9, date: '2026-05-25' },
+    { id: 't88', crewId: 'c4', jobId: 'j4', hours: 9, date: '2026-05-26' },
+    { id: 't89', crewId: 'c12', jobId: 'j4', hours: 9, date: '2026-05-26' },
+    { id: 't90', crewId: 'c6', jobId: 'j5', hours: 8, date: '2026-05-26' },
+    { id: 't91', crewId: 'c12', jobId: 'j4', hours: 8, date: '2026-05-27' },
+    { id: 't92', crewId: 'c5', jobId: 'j2', hours: 7, date: '2026-05-27' },
+    { id: 't93', crewId: 'c4', jobId: 'j4', hours: 8, date: '2026-05-27' },
+    { id: 't94', crewId: 'c6', jobId: 'j5', hours: 6.5, date: '2026-05-27' },
+    { id: 't95', crewId: 'c7', jobId: 'j4', hours: 8, date: '2026-05-28' },
+    { id: 't96', crewId: 'c4', jobId: 'j4', hours: 10, date: '2026-05-28' },
+    { id: 't97', crewId: 'c6', jobId: 'j5', hours: 8, date: '2026-05-28' },
+    { id: 't98', crewId: 'c5', jobId: 'j2', hours: 7, date: '2026-05-28' },
+    { id: 't99', crewId: 'c7', jobId: 'j4', hours: 8.5, date: '2026-05-29' },
+    { id: 't100', crewId: 'c6', jobId: 'j5', hours: 9, date: '2026-05-29' },
+    { id: 't101', crewId: 'c5', jobId: 'j2', hours: 11, date: '2026-05-29' },
+    { id: 't102', crewId: 'c4', jobId: 'j4', hours: 8.5, date: '2026-05-29' },
+    { id: 't103', crewId: 'c5', jobId: 'j12', hours: 5.5, date: '2026-05-30' },
+    { id: 't104', crewId: 'c5', jobId: 'j4', hours: 6.5, date: '2026-06-01' },
+    { id: 't105', crewId: 'c7', jobId: 'j4', hours: 8, date: '2026-06-01' },
+    { id: 't106', crewId: 'c4', jobId: 'j4', hours: 8, date: '2026-06-01' },
+    { id: 't107', crewId: 'c5', jobId: 'j4', hours: 6.5, date: '2026-06-02' },
+    { id: 't108', crewId: 'c4', jobId: 'j4', hours: 7, date: '2026-06-02' },
+    { id: 't109', crewId: 'c7', jobId: 'j4', hours: 8, date: '2026-06-02' },
+    { id: 't110', crewId: 'c4', jobId: 'j12', hours: 6, date: '2026-05-30' },
+    { id: 't111', crewId: 'c3', jobId: 'j13', hours: 6.5, date: '2026-06-03' },
+    { id: 't112', crewId: 'c7', jobId: 'j4', hours: 8, date: '2026-06-03' },
+    { id: 't113', crewId: 'c5', jobId: 'j5', hours: 9, date: '2026-06-03' },
+    { id: 't114', crewId: 'c4', jobId: 'j4', hours: 10, date: '2026-06-03' },
+    { id: 't115', crewId: 'c8', jobId: 'j13', hours: 7, date: '2026-06-04' },
+    { id: 't116', crewId: 'c5', jobId: 'j13', hours: 10, date: '2026-06-04' },
+    { id: 't117', crewId: 'c6', jobId: 'j5', hours: 8, date: '2026-06-03' },
+    { id: 't118', crewId: 'c4', jobId: 'j4', hours: 4.5, date: '2026-06-04' },
+    { id: 't119', crewId: 'c6', jobId: 'j5', hours: 7.5, date: '2026-06-04' },
+    { id: 't120', crewId: 'c3', jobId: 'j13', hours: 8, date: '2026-06-04' },
+    { id: 't121', crewId: 'c1', jobId: 'j13', hours: 10.3, date: '2026-06-04' },
+    { id: 't122', crewId: 'c7', jobId: 'j4', hours: 8, date: '2026-06-05' },
+    { id: 't123', crewId: 'c4', jobId: 'j4', hours: 8, date: '2026-06-05' },
+    { id: 't124', crewId: 'c6', jobId: 'j5', hours: 9, date: '2026-06-05' },
+    { id: 't125', crewId: 'c5', jobId: 'j13', hours: 10.5, date: '2026-06-05' },
+    { id: 't126', crewId: 'c3', jobId: 'j13', hours: 9, date: '2026-06-05' },
+    { id: 't127', crewId: 'c4', jobId: 'j2', hours: 10.5, date: '2026-06-06' },
+    { id: 't128', crewId: 'c5', jobId: 'j5', hours: 7, date: '2026-06-07' },
+    { id: 't129', crewId: 'c4', jobId: 'j2', hours: 8, date: '2026-06-07' },
+    { id: 't130', crewId: 'c7', jobId: 'j4', hours: 8, date: '2026-06-08' },
+    { id: 't131', crewId: 'c5', jobId: 'j13', hours: 10, date: '2026-06-08' },
+    { id: 't132', crewId: 'c3', jobId: 'j13', hours: 9.5, date: '2026-06-08' },
+    { id: 't133', crewId: 'c6', jobId: 'j5', hours: 10, date: '2026-06-08' },
+    { id: 't134', crewId: 'c4', jobId: 'j4', hours: 13, date: '2026-06-08' },
+    { id: 't135', crewId: 'c5', jobId: 'j2', hours: 6, date: '2026-06-06' },
+    { id: 't136', crewId: 'c7', jobId: 'j4', hours: 7.5, date: '2026-06-09' },
+    { id: 't137', crewId: 'c3', jobId: 'j14', hours: 7, date: '2026-06-09' },
+    { id: 't138', crewId: 'c6', jobId: 'j5', hours: 7.5, date: '2026-06-09' },
+    { id: 't139', crewId: 'c5', jobId: 'j13', hours: 10, date: '2026-06-09' },
+    { id: 't140', crewId: 'c4', jobId: 'j7', hours: 12.5, date: '2026-06-09' },
+    { id: 't141', crewId: 'c8', jobId: 'j13', hours: 7, date: '2026-06-08' },
+    { id: 't142', crewId: 'c8', jobId: 'j14', hours: 6, date: '2026-06-10' },
+    { id: 't143', crewId: 'c7', jobId: 'j7', hours: 9, date: '2026-06-10' },
+    { id: 't144', crewId: 'c4', jobId: 'j7', hours: 10, date: '2026-06-10' },
+    { id: 't145', crewId: 'c3', jobId: 'j14', hours: 7.5, date: '2026-06-10' },
+    { id: 't146', crewId: 'c6', jobId: 'j9', hours: 8, date: '2026-06-10' },
+    { id: 't147', crewId: 'c5', jobId: 'j7', hours: 9.5, date: '2026-06-10' },
+    { id: 't148', crewId: 'c8', jobId: 'j1', hours: 2.5, date: '2026-06-11' },
+    { id: 't149', crewId: 'c6', jobId: 'j9', hours: 7.5, date: '2026-06-11' },
+    { id: 't150', crewId: 'c7', jobId: 'j7', hours: 10, date: '2026-06-11' },
+    { id: 't151', crewId: 'c5', jobId: 'j13', hours: 8.5, date: '2026-06-11' },
+    { id: 't152', crewId: 'c4', jobId: 'j7', hours: 10, date: '2026-06-11' },
+    { id: 't153', crewId: 'c6', jobId: 'j1', hours: 5, date: '2026-06-12' },
+    { id: 't154', crewId: 'c7', jobId: 'j7', hours: 8.5, date: '2026-06-12' },
+    { id: 't155', crewId: 'c5', jobId: 'j13', hours: 10.5, date: '2026-06-12' },
+    { id: 't156', crewId: 'c3', jobId: 'j13', hours: 10, date: '2026-06-12' },
+    { id: 't157', crewId: 'c7', jobId: 'j7', hours: 9.5, date: '2026-06-15' },
+    { id: 't158', crewId: 'c4', jobId: 'j7', hours: 9.5, date: '2026-06-15' },
+    { id: 't159', crewId: 'c5', jobId: 'j7', hours: 10, date: '2026-06-15' },
+    { id: 't160', crewId: 'c6', jobId: 'j1', hours: 3, date: '2026-06-15' },
+    { id: 't161', crewId: 'c5', jobId: 'j1', hours: 3.5, date: '2026-06-16' },
+    { id: 't162', crewId: 'c7', jobId: 'j7', hours: 8, date: '2026-06-16' },
+    { id: 't163', crewId: 'c4', jobId: 'j4', hours: 8, date: '2026-06-16' },
+    { id: 't164', crewId: 'c6', jobId: 'j15', hours: 6, date: '2026-06-16' },
+    { id: 't165', crewId: 'c3', jobId: 'j1', hours: 8.5, date: '2026-06-17' },
+    { id: 't166', crewId: 'c7', jobId: 'j7', hours: 8, date: '2026-06-17' },
+    { id: 't167', crewId: 'c4', jobId: 'j4', hours: 12, date: '2026-06-17' },
+    { id: 't168', crewId: 'c13', jobId: 'j16', hours: 2, date: '2026-06-17' },
+    { id: 't169', crewId: 'c5', jobId: 'j1', hours: 9.5, date: '2026-06-17' },
+    { id: 't170', crewId: 'c6', jobId: 'j1', hours: 8, date: '2026-06-17' },
+    { id: 't171', crewId: 'c7', jobId: 'j17', hours: 4.5, date: '2026-06-18' },
+    { id: 't172', crewId: 'c5', jobId: 'j18', hours: 5, date: '2026-06-18' },
+    { id: 't173', crewId: 'c4', jobId: 'j4', hours: 8, date: '2026-06-18' },
+    { id: 't174', crewId: 'c6', jobId: 'j5', hours: 8.5, date: '2026-06-18' },
+    { id: 't175', crewId: 'c7', jobId: 'j4', hours: 8, date: '2026-06-19' },
+    { id: 't176', crewId: 'c5', jobId: 'j13', hours: 8, date: '2026-06-19' },
+    { id: 't177', crewId: 'c3', jobId: 'j13', hours: 6, date: '2026-06-19' },
+    { id: 't178', crewId: 'c4', jobId: 'j4', hours: 5.5, date: '2026-06-19' },
+    { id: 't179', crewId: 'c6', jobId: 'j5', hours: 7.5, date: '2026-06-19' },
+    { id: 't180', crewId: 'c3', jobId: 'j13', hours: 5.5, date: '2026-06-20' },
+    { id: 't181', crewId: 'c5', jobId: 'j13', hours: 6, date: '2026-06-20' },
+    { id: 't182', crewId: 'c8', jobId: 'j14', hours: 3, date: '2026-06-20' },
+    { id: 't183', crewId: 'c14', jobId: 'j4', hours: 8, date: '2026-05-25' },
+    { id: 't184', crewId: 'c14', jobId: 'j4', hours: 8, date: '2026-05-26' },
+    { id: 't185', crewId: 'c14', jobId: 'j4', hours: 8, date: '2026-05-27' },
+    { id: 't186', crewId: 'c14', jobId: 'j4', hours: 10, date: '2026-05-28' },
+    { id: 't187', crewId: 'c14', jobId: 'j4', hours: 8, date: '2026-05-29' },
+    { id: 't188', crewId: 'c14', jobId: 'j4', hours: 8, date: '2026-06-01' },
+    { id: 't189', crewId: 'c14', jobId: 'j4', hours: 8, date: '2026-06-02' },
+    { id: 't190', crewId: 'c14', jobId: 'j4', hours: 8, date: '2026-06-03' },
+    { id: 't191', crewId: 'c14', jobId: 'j4', hours: 8, date: '2026-06-08' },
+    { id: 't192', crewId: 'c14', jobId: 'j7', hours: 9, date: '2026-06-09' },
+    { id: 't193', crewId: 'c14', jobId: 'j7', hours: 10, date: '2026-06-10' },
+    { id: 't194', crewId: 'c14', jobId: 'j7', hours: 10, date: '2026-06-11' },
+    { id: 't195', crewId: 'c14', jobId: 'j7', hours: 8, date: '2026-06-12' },
+    { id: 't196', crewId: 'c14', jobId: 'j7', hours: 9.5, date: '2026-06-15' },
+    { id: 't197', crewId: 'c14', jobId: 'j7', hours: 8, date: '2026-06-16' },
+    { id: 't198', crewId: 'c14', jobId: 'j7', hours: 8, date: '2026-06-17' },
+    { id: 't199', crewId: 'c14', jobId: 'j4', hours: 8, date: '2026-06-18' },
+    { id: 't200', crewId: 'c14', jobId: 'j4', hours: 8, date: '2026-06-19' },
+  ];
+  const dPlus = (n) => { const x = new Date(); x.setDate(x.getDate() + n); return x.toISOString().slice(0, 10); };
+  const tasks = [
+    { id: 'tk1', title: 'Finish hallway baseboards 3rd floor', assignedBy: 'Omar', assignedTo: 'c4', notes: 'Use 18ga finishing nails. Match existing profile.', assignedDate: dPlus(-2), deadline: dPlus(2), status: 'open' },
+    { id: 'tk2', title: 'Build deck framing', assignedBy: 'Omar', assignedTo: 'c5', notes: 'Waiting on 5x 2x10x16. Jordan deck side first.', assignedDate: dPlus(-3), deadline: dPlus(-1), status: 'open' },
+  ];
+  return { jobs, crew, timeEntries, schedule: [], tasks, overheadPct: 0.10, seeded: true };
+}
+
+// ---------- Small UI pieces ----------
+const Card = ({ children, style, id }) => (
+  <div
+    id={id}
+    style={{
+      background: T.card,
+      borderRadius: 14,
+      border: `1px solid ${T.line}`,
+      padding: 14,
+      ...style,
+    }}
+  >
+    {children}
+  </div>
+);
+
+const Eyebrow = ({ children, color = T.sub }) => (
+  <div
+    style={{
+      fontFamily: font.display,
+      fontWeight: 600,
+      fontSize: 11,
+      letterSpacing: "0.12em",
+      textTransform: "uppercase",
+      color,
+    }}
+  >
+    {children}
+  </div>
+);
+
+const Btn = ({ children, onClick, kind = "hivis", small, style }) => {
+  const base = {
+    hivis: { background: T.hivis, color: "#fff", border: "none" },
+    ghost: { background: "transparent", color: T.ink, border: `1.5px solid ${T.line}` },
+    ink: { background: T.ink, color: "#fff", border: "none" },
+    danger: { background: "transparent", color: T.out, border: `1.5px solid ${T.line}` },
+  }[kind];
+  return (
+    <button
+      onClick={onClick}
+      style={{
+        ...base,
+        fontFamily: font.display,
+        fontWeight: 600,
+        fontSize: small ? 13 : 15,
+        letterSpacing: "0.02em",
+        padding: small ? "7px 12px" : "12px 16px",
+        borderRadius: 10,
+        cursor: "pointer",
+        ...style,
+      }}
+    >
+      {children}
+    </button>
+  );
+};
+
+const inputStyle = {
+  width: "100%",
+  boxSizing: "border-box",
+  padding: "11px 12px",
+  borderRadius: 10,
+  border: `1.5px solid ${T.line}`,
+  fontSize: 16,
+  fontFamily: font.body,
+  color: T.ink,
+  background: "#fff",
+  outline: "none",
+};
+
+const Field = ({ label, children }) => (
+  <label style={{ display: "block", marginBottom: 10 }}>
+    <div style={{ fontSize: 12, fontWeight: 600, color: T.sub, marginBottom: 4 }}>{label}</div>
+    {children}
+  </label>
+);
+
+// ---------- Main app ----------
+function FieldLedger() {
+  const [data, setData] = useState(null);
+  const [tab, setTab] = useState("today");
+  const [focusJob, setFocusJob] = useState(null);
+  const openJob = (id) => { setFocusJob(id); setTab("jobs"); };
+  const [storageOk, setStorageOk] = useState(true);
+
+  // Load
+  useEffect(() => {
+    (async () => {
+      let loaded = null;
+      try {
+        if (typeof window !== "undefined" && window.storage) {
+          const res = await window.storage.get("field-ledger-v1");
+          if (res && res.value) loaded = JSON.parse(res.value);
+        }
+      } catch (e) {
+        // key missing or storage unavailable — start fresh
+      }
+      setData(loaded ? {
+        ...loaded,
+        schedule: loaded.schedule || [],
+        tasks: loaded.tasks || [],
+        crew: (loaded.crew || []).map((c) => ({ ...c, rate: c.rate || 75, casual: c.casual || false, active: c.active !== false })).sort(byName),
+        jobs: (loaded.jobs || []).map((j) => ({ ...j, expenses: j.expenses || [], changes: j.changes || [], address: j.address || "" })).sort(byName),
+      } : seed());
+    })();
+  }, []);
+
+  // Save
+  const save = async (next) => {
+    setData(next);
+    try {
+      if (typeof window !== "undefined" && window.storage) {
+        const r = await window.storage.set("field-ledger-v1", JSON.stringify(next));
+        if (!r) setStorageOk(false);
+      } else {
+        setStorageOk(false);
+      }
+    } catch {
+      setStorageOk(false);
+    }
+  };
+
+  const [confirmReset, setConfirmReset] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
+  const resetAll = async () => {
+    if (!confirmReset) {
+      setConfirmReset(true);
+      setTimeout(() => setConfirmReset(false), 3000);
+      return;
+    }
+    setConfirmReset(false);
+    const fresh = seed();
+    fresh.crew = [...fresh.crew].sort(byName);
+    fresh.jobs = [...fresh.jobs].sort(byName);
+    try {
+      if (typeof window !== "undefined" && window.storage) {
+        await window.storage.set("field-ledger-v1", JSON.stringify(fresh));
+      }
+    } catch {}
+    setData(fresh);
+  };
+
+  if (!data)
+    return (
+      <div style={{ minHeight: "100vh", background: T.bg, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: font.display, color: T.sub }}>
+        Loading the books…
+      </div>
+    );
+
+  const primaryTabs = [
+    { id: "today", label: "Today" },
+    { id: "schedule", label: "Schedule" },
+    { id: "jobs", label: "Jobs" },
+    { id: "hours", label: "Hours" },
+  ];
+  const overflowTabs = [
+    { id: "calendar", label: "Calendar", desc: "Month view & calendar exports" },
+    { id: "tasks", label: "Tasks", desc: "Assign and track work" },
+    { id: "assistant", label: "Assistant", desc: "Ask Claude about your data" },
+    { id: "manage", label: "Manage", desc: "Crew, jobs & overhead settings" },
+  ];
+  const inMore = overflowTabs.some((t) => t.id === tab);
+  const go = (id) => { setTab(id); setMoreOpen(false); };
+  const navBtn = (active) => ({
+    background: "none", border: "none", cursor: "pointer",
+    fontFamily: font.display, fontWeight: 700, fontSize: 12,
+    letterSpacing: "0.01em", textTransform: "uppercase",
+    color: active ? T.ink : T.sub,
+    borderTop: active ? `3px solid ${T.hivis}` : "3px solid transparent",
+    paddingTop: 6, flex: "1 1 0", minWidth: 44, whiteSpace: "nowrap",
+  });
+
+  return (
+    <div style={{ minHeight: "100vh", background: T.bg, fontFamily: font.body, color: T.ink, paddingBottom: 86 }}>
+      <style>{`
+        * { -webkit-tap-highlight-color: transparent; }
+        input, select { font-size: 16px !important; }
+        @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+      `}</style>
+
+      {/* Header */}
+      <div style={{ background: T.ink, color: "#fff", padding: "18px 16px 14px" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", maxWidth: 560, margin: "0 auto" }}>
+          <div>
+            <div style={{ fontFamily: font.display, fontWeight: 800, fontSize: 22, letterSpacing: "0.03em" }}>
+              FIELD<span style={{ color: T.hivis }}>LEDGER</span>
+            </div>
+            <div style={{ fontSize: 12, color: "#9FB0AC" }}>
+              {new Date().toLocaleDateString("en-US", { weekday: "short", month: "long", day: "numeric" })}
+              {data.seeded ? " · sample data" : ""}
+            </div>
+          </div>
+          <Btn kind="ghost" small onClick={resetAll} style={{ color: confirmReset ? T.hivis : "#9FB0AC", borderColor: confirmReset ? T.hivis : "#3A4644" }}>
+            {confirmReset ? "Tap again" : "Reset"}
+          </Btn>
+        </div>
+      </div>
+
+      {!storageOk && (
+        <div style={{ background: T.hivisSoft, color: T.out, fontSize: 13, padding: "8px 16px", textAlign: "center" }}>
+          Saving is unavailable right now — changes will last only this session.
+        </div>
+      )}
+
+      <div style={{ maxWidth: 560, margin: "0 auto", padding: "14px 14px 0" }}>
+        {tab === "today" && <Today data={data} onOpenJob={openJob} />}
+        {tab === "schedule" && <Schedule data={data} save={save} />}
+        {tab === "calendar" && <CalendarView data={data} />}
+        {tab === "jobs" && <Jobs data={data} save={save} focusJob={focusJob} clearFocus={() => setFocusJob(null)} />}
+        {tab === "tasks" && <TaskTracker data={data} save={save} />}
+        {tab === "hours" && <HoursReport data={data} />}
+        {tab === "assistant" && <Assistant data={data} />}
+        {tab === "manage" && <Manage data={data} save={save} />}
+      </div>
+
+      {/* More sheet */}
+      {moreOpen && (
+        <>
+          <div onClick={() => setMoreOpen(false)} style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.35)", zIndex: 60 }} />
+          <div style={{ position: "fixed", left: 0, right: 0, bottom: 0, background: T.card, borderTopLeftRadius: 18, borderTopRightRadius: 18, zIndex: 61, padding: "10px 14px calc(16px + env(safe-area-inset-bottom))", maxWidth: 560, margin: "0 auto" }}>
+            <div style={{ width: 40, height: 4, borderRadius: 2, background: T.line, margin: "6px auto 12px" }} />
+            <div style={{ fontFamily: font.display, fontWeight: 800, fontSize: 12, letterSpacing: ".08em", textTransform: "uppercase", color: T.sub, marginBottom: 8, paddingLeft: 2 }}>More</div>
+            {overflowTabs.map((t) => (
+              <button key={t.id} onClick={() => go(t.id)} style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", width: "100%", textAlign: "left", background: tab === t.id ? T.hivisSoft : "transparent", border: "none", borderRadius: 12, padding: "12px", cursor: "pointer", marginBottom: 4 }}>
+                <span style={{ fontFamily: font.display, fontWeight: 700, fontSize: 16, color: tab === t.id ? T.hivis : T.ink }}>{t.label}</span>
+                <span style={{ fontSize: 12, color: T.sub, marginTop: 2 }}>{t.desc}</span>
+              </button>
+            ))}
+          </div>
+        </>
+      )}
+
+      {/* Bottom nav */}
+      <nav
+        style={{
+          position: "fixed", bottom: 0, left: 0, right: 0,
+          background: T.card, borderTop: `1px solid ${T.line}`,
+          display: "flex", justifyContent: "space-around",
+          padding: "8px 6px calc(8px + env(safe-area-inset-bottom))", zIndex: 50,
+        }}
+      >
+        {primaryTabs.map((t) => (
+          <button key={t.id} onClick={() => go(t.id)} style={navBtn(tab === t.id)}>{t.label}</button>
+        ))}
+        <button onClick={() => setMoreOpen((v) => !v)} style={navBtn(inMore || moreOpen)}>More ⋯</button>
+      </nav>
+    </div>
+  );
+}
+
+// ---------- Shared math ----------
+function useTotals(data) {
+  return useMemo(() => {
+    const m = monthStr();
+    const laborByJob = {};
+    let laborTotal = 0;
+    data.timeEntries.forEach((e) => {
+      const guy = data.crew.find((c) => c.id === e.crewId);
+      if (!guy) return;
+      const cost = e.hours * guy.rate;
+      laborByJob[e.jobId] = (laborByJob[e.jobId] || 0) + cost;
+      if (e.date.startsWith(m)) laborTotal += cost;
+    });
+    return { laborByJob, laborTotal, month: m };
+  }, [data]);
+}
+
+const jobExpenseTotal = (job) => (job.expenses || []).reduce((s, x) => s + (x.amount || 0), 0);
+const isActiveCrew = (c) => c.active !== false;
+const isCoreCrew = (c) => c.active !== false && !c.casual;
+
+// Classification review: <20h/wk or inconsistent over a 3+ wk window => casual; consistent >=20h/wk => permanent.
+// Returns a suggestion only when it disagrees with the current type (flag for review, never auto-applied).
+function classifyReview(c, timeEntries) {
+  if (c.active === false) return { suggestion: null };
+  const es = (timeEntries || []).filter((e) => e.crewId === c.id);
+  if (es.length === 0) return { suggestion: null };
+  const maxDate = (timeEntries || []).reduce((m, e) => (e.date > m ? e.date : m), "0000-00-00");
+  const lastWk = weekStartOf(maxDate);
+  const W = 4;
+  const weeks = Array.from({ length: W }, (_, i) => addDays(lastWk, -(W - 1 - i) * 7));
+  const wkHours = weeks.map((ws) => es.filter((e) => e.date >= ws && e.date <= addDays(ws, 6)).reduce((s, e) => s + e.hours, 0));
+  const present = wkHours.filter((h) => h > 0).length;
+  const total = wkHours.reduce((a, b) => a + b, 0);
+  const avg = present ? total / present : 0;
+  const overallWeeks = new Set(es.map((e) => weekStartOf(e.date))).size;
+  const consistent = present >= 3 && avg >= 20;
+  const current = c.casual ? "casual" : "permanent";
+  const avgR = Math.round(avg);
+  if (consistent && current === "casual") return { suggestion: "permanent", reason: `~${avgR}h/wk across ${present} of last ${W} weeks — consistent`, avg, present, W };
+  if (!consistent && current === "permanent" && overallWeeks >= 3) {
+    const reason = present === 0 ? `no hours in last ${W} weeks` : `~${avgR}h/wk, only ${present} of last ${W} weeks`;
+    return { suggestion: "casual", reason, avg, present, W };
+  }
+  return { suggestion: null };
+}
+const jobChangeCost = (job) => (job.changes || []).reduce((s, x) => s + (x.cost || 0), 0);
+const jobChangeBilled = (job) => (job.changes || []).reduce((s, x) => s + (x.billed || 0), 0);
+const jobSubTotal = (job) => (job.subs || []).reduce((s, x) => s + (x.price || 0), 0);
+const mapsUrl = (addr) => "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(addr);
+
+// ----- Calendar export helpers (one-way push to Google / Apple) -----
+const icsDate = (ds) => ds.replace(/-/g, "");
+const gcalUrl = (title, startDs, endExclusiveDs, details = "", location = "") =>
+  "https://calendar.google.com/calendar/render?action=TEMPLATE&text=" + encodeURIComponent(title) +
+  "&dates=" + icsDate(startDs) + "/" + icsDate(endExclusiveDs) +
+  (details ? "&details=" + encodeURIComponent(details) : "") +
+  (location ? "&location=" + encodeURIComponent(location) : "");
+const icsHref = (title, startDs, endExclusiveDs, details = "", location = "") => {
+  const stamp = new Date().toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
+  const lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//FieldLedger//EN", "BEGIN:VEVENT",
+    "UID:" + Math.random().toString(36).slice(2) + "@fieldledger", "DTSTAMP:" + stamp,
+    "DTSTART;VALUE=DATE:" + icsDate(startDs), "DTEND;VALUE=DATE:" + icsDate(endExclusiveDs),
+    "SUMMARY:" + title, details ? "DESCRIPTION:" + details : "", location ? "LOCATION:" + location : "",
+    "END:VEVENT", "END:VCALENDAR"].filter(Boolean).join("\r\n");
+  return "data:text/calendar;charset=utf-8," + encodeURIComponent(lines);
+};
+
+// Read a phone photo and downscale it so it fits in storage (~50-150KB)
+const compressImage = (file, maxDim = 1200, quality = 0.6) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const img = new Image();
+      img.onload = () => {
+        let { width, height } = img;
+        if (width >= height && width > maxDim) { height = Math.round((height * maxDim) / width); width = maxDim; }
+        else if (height > width && height > maxDim) { width = Math.round((width * maxDim) / height); height = maxDim; }
+        const canvas = document.createElement("canvas");
+        canvas.width = width; canvas.height = height;
+        canvas.getContext("2d").drawImage(img, 0, 0, width, height);
+        try { resolve(canvas.toDataURL("image/jpeg", quality)); } catch (e) { reject(e); }
+      };
+      img.onerror = reject;
+      img.src = reader.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+const MapsLink = ({ address }) =>
+  address ? (
+    <a href={mapsUrl(address)} target="_blank" rel="noreferrer"
+      style={{ color: T.hivis, textDecoration: "none", fontWeight: 600, display: "inline-flex", alignItems: "center", gap: 4 }}>
+      📍 {address}
+    </a>
+  ) : null;
+
+// ---------- TODAY ----------
+function Today({ data, onOpenJob }) {
+  const tot = useTotals(data);
+  const monthName = new Date().toLocaleDateString("en-US", { month: "long" });
+
+  const coreCrew = data.crew.filter(isCoreCrew);
+  const assigned = coreCrew.filter((c) => c.jobId);
+  const bench = coreCrew.length - assigned.length;
+  const activeJobs = data.jobs.filter((j) => j.status === "active");
+
+  // Job costing roll-up
+  const rows = activeJobs.map((j) => {
+    const labor = tot.laborByJob[j.id] || 0;
+    const exp = jobExpenseTotal(j) + jobChangeCost(j) + jobSubTotal(j);
+    const cost = labor + exp;
+    const billed = (j.revenue || 0) + jobChangeBilled(j);
+    return { j, labor, exp, cost, billed, margin: billed - cost };
+  });
+  const billed = rows.reduce((s, r) => s + r.billed, 0);
+  const cost = rows.reduce((s, r) => s + r.cost, 0);
+  const margin = billed - cost;
+  const tight = rows.filter((r) => r.j.revenue > 0 && r.margin < 0);
+
+  // This week (Sun–Sat)
+  const rateOf = (id) => { const c = data.crew.find((x) => x.id === id); return c ? c.rate || 0 : 0; };
+  const wkStart = weekStartOf(todayStr());
+  const wkEnd = addDays(wkStart, 6);
+  const weekEntries = (data.timeEntries || []).filter((e) => e.date >= wkStart && e.date <= wkEnd);
+  const weekHours = weekEntries.reduce((s, e) => s + e.hours, 0);
+  const weekCost = weekEntries.reduce((s, e) => s + e.hours * rateOf(e.crewId), 0);
+  const weekJobMap = {};
+  weekEntries.forEach((e) => {
+    const w = (weekJobMap[e.jobId] = weekJobMap[e.jobId] || { hours: 0, cost: 0, crew: new Set() });
+    w.hours += e.hours; w.cost += e.hours * rateOf(e.crewId);
+    const c = data.crew.find((x) => x.id === e.crewId); if (c) w.crew.add(c.name);
+  });
+  const weekJobs = Object.entries(weekJobMap).map(([jid, w]) => ({
+    job: data.jobs.find((j) => j.id === jid), hours: w.hours, cost: w.cost, crew: [...w.crew],
+  })).filter((x) => x.job).sort((a, b) => a.job.name.localeCompare(b.job.name));
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+      {/* This week */}
+      <Card>
+        <Eyebrow>This week ({shortDate(wkStart)}–{shortDate(wkEnd)})</Eyebrow>
+        <div style={{ display: "flex", gap: 16, marginTop: 6 }}>
+          <div>
+            <div style={{ fontFamily: font.num, fontWeight: 800, fontSize: 30 }}>{Math.round(weekHours * 10) / 10}<span style={{ fontSize: 16, color: T.sub }}>h</span></div>
+            <div style={{ fontSize: 12, color: T.sub }}>hours worked</div>
+          </div>
+          <div style={{ width: 1, background: T.line }} />
+          <div>
+            <div style={{ fontFamily: font.num, fontWeight: 800, fontSize: 30, color: T.out }}>{fmt(weekCost)}</div>
+            <div style={{ fontSize: 12, color: T.sub }}>labour cost</div>
+          </div>
+        </div>
+      </Card>
+
+      <Card>
+        <Eyebrow>This week — by job (cost · crew · hours)</Eyebrow>
+        <div style={{ marginTop: 6 }}>
+          {weekJobs.length === 0 && <div style={{ fontSize: 14, color: T.sub }}>No hours logged this week yet.</div>}
+          {weekJobs.map(({ job, hours, cost, crew }) => (
+            <div key={job.id} onClick={() => onOpenJob && onOpenJob(job.id)} style={{ padding: "9px 2px", borderBottom: `1px solid ${T.line}`, cursor: "pointer" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+                <span style={{ fontFamily: font.display, fontWeight: 700, fontSize: 15 }}>{job.name} <span style={{ color: T.sub, fontWeight: 600, fontSize: 12 }}>›</span></span>
+                <span style={{ fontFamily: font.num, fontWeight: 800, fontSize: 15, fontVariantNumeric: "tabular-nums" }}>
+                  {fmt(cost)} <span style={{ color: T.sub, fontWeight: 600, fontSize: 13 }}>· {Math.round(hours * 10) / 10}h</span>
+                </span>
+              </div>
+              <div style={{ fontSize: 12, color: T.sub, marginTop: 2 }}>{crew.join(", ")}</div>
+            </div>
+          ))}
+        </div>
+      </Card>
+      {/* Signature: active-job margin */}
+      <Card>
+        <Eyebrow>Active jobs — margin left</Eyebrow>
+        <div style={{ fontFamily: font.num, fontWeight: 800, fontSize: 44, lineHeight: 1.1, color: margin >= 0 ? T.in : T.out, fontVariantNumeric: "tabular-nums" }}>
+          {fmt(margin)}
+        </div>
+        <div style={{ fontSize: 13, color: T.sub, marginTop: 2 }}>
+          {fmt(billed)} billed · {fmt(cost)} cost on {activeJobs.length} job{activeJobs.length !== 1 ? "s" : ""}
+        </div>
+      </Card>
+
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+        <Card>
+          <Eyebrow>Labor this month</Eyebrow>
+          <div style={{ fontFamily: font.num, fontWeight: 800, fontSize: 26 }}>{fmt(tot.laborTotal)}</div>
+          <div style={{ fontSize: 12, color: T.sub }}>{data.timeEntries.length} time entries</div>
+        </Card>
+        <Card>
+          <Eyebrow>Crew</Eyebrow>
+          <div style={{ fontFamily: font.num, fontWeight: 800, fontSize: 26 }}>
+            {assigned.length}<span style={{ color: T.sub, fontSize: 16 }}> /{coreCrew.length} on jobs</span>
+          </div>
+          <div style={{ fontSize: 12, color: bench ? T.hivis : T.sub, fontWeight: bench ? 700 : 400 }}>
+            {bench ? `${bench} unassigned` : "everyone assigned"}
+          </div>
+        </Card>
+      </div>
+
+      {tight.length > 0 && (
+        <Card style={{ borderLeft: `4px solid ${T.out}` }}>
+          <Eyebrow color={T.out}>Over budget</Eyebrow>
+          <div style={{ fontSize: 14, marginTop: 4 }}>
+            {tight.map((r) => r.j.name).join(", ")} {tight.length === 1 ? "is" : "are"} costing more than billed. Check the Jobs tab.
+          </div>
+        </Card>
+      )}
+
+      <Card>
+        <Eyebrow>Job costing</Eyebrow>
+        <div style={{ marginTop: 6 }}>
+          {rows.length === 0 && <div style={{ fontSize: 14, color: T.sub }}>No active jobs.</div>}
+          {rows.map(({ j, cost, billed, margin }) => (
+            <div key={j.id} style={{ display: "flex", alignItems: "center", gap: 10, padding: "9px 0", borderBottom: `1px solid ${T.line}` }}>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ fontSize: 15, fontWeight: 600, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{j.name}</div>
+                <div style={{ fontSize: 12, color: T.sub }}>{fmt(billed)} billed · {fmt(cost)} cost</div>
+              </div>
+              <div style={{ fontFamily: font.num, fontWeight: 700, fontSize: 16, color: margin >= 0 ? T.in : T.out, fontVariantNumeric: "tabular-nums" }}>
+                {fmt(margin)}
+              </div>
+            </div>
+          ))}
+        </div>
+      </Card>
+    </div>
+  );
+}
+
+// ---------- SCHEDULE ----------
+const addDays = (ds, n) => {
+  const d = new Date(ds + "T00:00:00");
+  d.setDate(d.getDate() + n);
+  return d.toISOString().slice(0, 10);
+};
+const shortDate = (ds) => new Date(ds + "T00:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" });
+const weekStart = (ds) => { const d = new Date(ds + "T00:00:00"); const dow = (d.getDay() + 6) % 7; d.setDate(d.getDate() - dow); return d.toISOString().slice(0, 10); };
+const isoWeek = (ds) => { const d = new Date(ds + "T00:00:00"); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() + 3 - ((d.getDay() + 6) % 7)); const w1 = new Date(d.getFullYear(), 0, 4); return 1 + Math.round(((d - w1) / 86400000 - 3 + ((w1.getDay() + 6) % 7)) / 7); };
+
+function Schedule({ data, save }) {
+  const [day, setDay] = useState(todayStr());
+  const [view, setView] = useState("day"); // "day" | "month"
+  const [monthAnchor, setMonthAnchor] = useState(todayStr().slice(0, 7) + "-01");
+  const [booking, setBooking] = useState(false);
+  const [bk, setBk] = useState({ crew: {}, jobId: "", start: todayStr(), end: todayStr(), skipWeekends: true });
+  const schedule = data.schedule || [];
+  const activeJobs = data.jobs.filter((j) => j.status === "active");
+  const coreCrewList = data.crew.filter(isCoreCrew);
+  const coreIds = new Set(coreCrewList.map((c) => c.id));
+  const totalCrew = coreCrewList.length;
+
+  const shiftMonth = (n) => {
+    const dt = new Date(monthAnchor + "T00:00:00");
+    dt.setMonth(dt.getMonth() + n);
+    setMonthAnchor(`${dt.getFullYear()}-${String(dt.getMonth() + 1).padStart(2, "0")}-01`);
+  };
+
+  const availOn = (ds) => totalCrew - new Set(schedule.filter((s) => s.date === ds && coreIds.has(s.crewId)).map((s) => s.crewId)).size;
+
+  // Next day (from today) where at least one crew member is free
+  const nextOpen = (() => {
+    if (totalCrew === 0) return null;
+    for (let i = 0; i < 90; i++) {
+      const ds = addDays(todayStr(), i);
+      if (availOn(ds) > 0) return ds;
+    }
+    return null;
+  })();
+  const nextAllFree = (() => {
+    if (totalCrew === 0) return null;
+    for (let i = 0; i < 90; i++) {
+      const ds = addDays(todayStr(), i);
+      if (availOn(ds) === totalCrew) return ds;
+    }
+    return null;
+  })();
+
+  const shiftDay = (n) => setDay(addDays(day, n));
+  const onDay = schedule.filter((s) => s.date === day);
+
+  // For a crew member on a job, find the unbroken run of days that includes `date`
+  const runFor = (crewId, jobId, date) => {
+    const set = new Set(schedule.filter((s) => s.crewId === crewId && s.jobId === jobId).map((s) => s.date));
+    let start = date, end = date;
+    while (set.has(addDays(start, -1))) start = addDays(start, -1);
+    while (set.has(addDays(end, 1))) end = addDays(end, 1);
+    const days = Math.round((new Date(end + "T00:00:00") - new Date(start + "T00:00:00")) / 86400000) + 1;
+    const idx = Math.round((new Date(date + "T00:00:00") - new Date(start + "T00:00:00")) / 86400000) + 1;
+    return { start, end, days, idx };
+  };
+
+  const removeDay = (crewId) =>
+    save({ ...data, schedule: schedule.filter((s) => !(s.crewId === crewId && s.date === day)), seeded: false });
+
+  const clearRun = (crewId, jobId) => {
+    const { start, end } = runFor(crewId, jobId, day);
+    save({ ...data, schedule: schedule.filter((s) => !(s.crewId === crewId && s.jobId === jobId && s.date >= start && s.date <= end)), seeded: false });
+  };
+
+  // ----- Multi-day booking -----
+  const bkDays = (() => {
+    if (!bk.start) return [];
+    const end = bk.end && bk.end >= bk.start ? bk.end : bk.start;
+    const out = [];
+    let d = bk.start, guard = 0;
+    while (d <= end && guard < 200) {
+      const dow = new Date(d + "T00:00:00").getDay();
+      if (!(bk.skipWeekends && (dow === 0 || dow === 6))) out.push(d);
+      d = addDays(d, 1);
+      guard++;
+    }
+    return out;
+  })();
+  const bkCrewIds = Object.keys(bk.crew).filter((k) => bk.crew[k]);
+
+  const book = () => {
+    if (!bkCrewIds.length || !bk.jobId || bkDays.length === 0) return;
+    let next = [...schedule];
+    bkCrewIds.forEach((cid) => {
+      bkDays.forEach((dt) => {
+        next = next.filter((s) => !(s.crewId === cid && s.date === dt)); // move if already booked that day
+        next.push({ id: uid(), crewId: cid, jobId: bk.jobId, date: dt });
+      });
+    });
+    save({ ...data, schedule: next, seeded: false });
+    setBooking(false);
+    setBk({ crew: {}, jobId: "", start: day, end: day, skipWeekends: true });
+  };
+
+  const scheduledIds = new Set(onDay.map((s) => s.crewId));
+  const available = data.crew.filter((c) => isCoreCrew(c) && !scheduledIds.has(c.id));
+
+  const booked = onDay
+    .map((s) => ({ s, c: data.crew.find((x) => x.id === s.crewId), j: data.jobs.find((x) => x.id === s.jobId), run: runFor(s.crewId, s.jobId, day) }))
+    .filter((b) => b.c)
+    .sort((a, b) => (a.j?.name || "").localeCompare(b.j?.name || "") || a.c.name.localeCompare(b.c.name));
+
+  const isToday = day === todayStr();
+  const dayLabel = new Date(day + "T00:00:00").toLocaleDateString("en-US", { weekday: "long", month: "short", day: "numeric" });
+
+  const strip = Array.from({ length: 7 }, (_, i) => {
+    const ds = addDays(todayStr(), i);
+    return { ds, dow: new Date(ds + "T00:00:00").toLocaleDateString("en-US", { weekday: "short" }).slice(0, 2), dom: new Date(ds + "T00:00:00").getDate(), count: schedule.filter((s) => s.date === ds).length };
+  });
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+      {/* View toggle */}
+      <div style={{ display: "flex", gap: 6, background: T.inkSoft, padding: 4, borderRadius: 12 }}>
+        {[{ id: "day", label: "Day view" }, { id: "month", label: "Month calendar" }].map((v) => (
+          <button key={v.id} onClick={() => setView(v.id)}
+            style={{ flex: 1, padding: "9px 0", borderRadius: 9, border: "none", cursor: "pointer",
+              fontFamily: font.display, fontWeight: 700, fontSize: 14, letterSpacing: "0.02em",
+              background: view === v.id ? "#fff" : "transparent", color: view === v.id ? T.ink : T.sub,
+              boxShadow: view === v.id ? "0 1px 3px rgba(0,0,0,.12)" : "none" }}>
+            {v.label}
+          </button>
+        ))}
+      </div>
+
+      {view === "month" && (() => {
+        const first = new Date(monthAnchor + "T00:00:00");
+        const y = first.getFullYear(), mo = first.getMonth();
+        const startDow = first.getDay();
+        const daysInMonth = new Date(y, mo + 1, 0).getDate();
+        const cells = [];
+        for (let i = 0; i < startDow; i++) cells.push(null);
+        for (let d = 1; d <= daysInMonth; d++) {
+          const ds = `${y}-${String(mo + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+          cells.push({ ds, d, avail: availOn(ds) });
+        }
+        const monthLabel = first.toLocaleDateString("en-US", { month: "long", year: "numeric" });
+        return (
+          <>
+            <Card style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+              <Btn small kind="ghost" onClick={() => shiftMonth(-1)}>‹</Btn>
+              <div style={{ fontFamily: font.display, fontWeight: 800, fontSize: 17 }}>{monthLabel}</div>
+              <Btn small kind="ghost" onClick={() => shiftMonth(1)}>›</Btn>
+            </Card>
+
+            {(nextOpen || nextAllFree) && (
+              <Card style={{ display: "flex", gap: 14, justifyContent: "space-around", textAlign: "center" }}>
+                <div>
+                  <Eyebrow color={T.hivis}>Next open day</Eyebrow>
+                  <div style={{ fontFamily: font.display, fontWeight: 800, fontSize: 16 }}>{nextOpen ? shortDate(nextOpen) : "—"}</div>
+                </div>
+                <div style={{ width: 1, background: T.line }} />
+                <div>
+                  <Eyebrow>Next all-free day</Eyebrow>
+                  <div style={{ fontFamily: font.display, fontWeight: 800, fontSize: 16 }}>{nextAllFree ? shortDate(nextAllFree) : "none in 90d"}</div>
+                </div>
+              </Card>
+            )}
+
+            <Card>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(7,1fr)", gap: 4, marginBottom: 6 }}>
+                {["S", "M", "T", "W", "T", "F", "S"].map((d, i) => (
+                  <div key={i} style={{ textAlign: "center", fontFamily: font.display, fontWeight: 700, fontSize: 11, color: T.sub }}>{d}</div>
+                ))}
+              </div>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(7,1fr)", gap: 4 }}>
+                {cells.map((c, i) => {
+                  if (!c) return <div key={i} />;
+                  const isToday = c.ds === todayStr();
+                  const full = totalCrew > 0 && c.avail === 0;          // nobody free
+                  const allFree = totalCrew > 0 && c.avail === totalCrew; // nobody booked
+                  const ratio = totalCrew ? c.avail / totalCrew : 1;
+                  const dot = full ? T.out : ratio < 0.5 ? T.hivis : T.in;
+                  return (
+                    <button key={i} onClick={() => { setDay(c.ds); setView("day"); }}
+                      style={{ aspectRatio: "1 / 1.15", padding: 2, borderRadius: 9, cursor: "pointer",
+                        border: `1.5px solid ${isToday ? T.ink : T.line}`,
+                        background: allFree ? "#fff" : full ? "#FCEEEA" : T.card,
+                        display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 2 }}>
+                      <div style={{ fontFamily: font.display, fontWeight: 700, fontSize: 13, color: T.ink }}>{c.d}</div>
+                      <div style={{ fontFamily: font.num, fontWeight: 800, fontSize: 12, color: dot, fontVariantNumeric: "tabular-nums" }}>
+                        {c.avail}/{totalCrew}
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+              <div style={{ display: "flex", gap: 14, flexWrap: "wrap", marginTop: 10, fontSize: 11, color: T.sub }}>
+                <span><b style={{ color: T.in }}>X/Y</b> = free / total crew</span>
+                <span><b style={{ color: T.out }}>0/Y</b> = fully committed</span>
+                <span>Tap a day to see who.</span>
+              </div>
+            </Card>
+          </>
+        );
+      })()}
+
+      {view === "day" && (<>
+      {/* Week strip */}
+      <div style={{ display: "flex", gap: 6, overflowX: "auto", paddingBottom: 2 }}>
+        {strip.map((s) => (
+          <button key={s.ds} onClick={() => setDay(s.ds)}
+            style={{ flex: "0 0 auto", width: 52, padding: "8px 0", borderRadius: 12, cursor: "pointer",
+              border: `1.5px solid ${day === s.ds ? T.ink : T.line}`, background: day === s.ds ? T.ink : "#fff",
+              color: day === s.ds ? "#fff" : T.ink, fontFamily: font.display }}>
+            <div style={{ fontSize: 11, fontWeight: 600, opacity: 0.8 }}>{s.dow}</div>
+            <div style={{ fontSize: 19, fontWeight: 800 }}>{s.dom}</div>
+            <div style={{ fontSize: 10, fontWeight: 700, color: day === s.ds ? T.hivis : (s.count ? T.in : T.sub) }}>{s.count ? `${s.count} on` : "—"}</div>
+          </button>
+        ))}
+      </div>
+
+      {/* Day header + nav */}
+      <Card style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <Btn small kind="ghost" onClick={() => shiftDay(-1)}>‹</Btn>
+        <div style={{ textAlign: "center" }}>
+          <div style={{ fontFamily: font.display, fontWeight: 800, fontSize: 17 }}>{dayLabel}</div>
+          <div style={{ fontSize: 12, color: isToday ? T.hivis : T.sub, fontWeight: 600 }}>
+            {isToday ? "TODAY · " : ""}{booked.length} booked · {available.length} available
+          </div>
+        </div>
+        <Btn small kind="ghost" onClick={() => shiftDay(1)}>›</Btn>
+      </Card>
+
+      {/* Book crew (multi-day) */}
+      <Btn onClick={() => setBooking(!booking)} style={{ width: "100%" }}>{booking ? "Close booking" : "+ Book crew (one or more days)"}</Btn>
+      {booking && (
+        <Card>
+          <Field label="Who">
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+              {data.crew.filter(isCoreCrew).map((c) => (
+                <button key={c.id} onClick={() => setBk({ ...bk, crew: { ...bk.crew, [c.id]: !bk.crew[c.id] } })}
+                  style={{ padding: "7px 12px", borderRadius: 999, cursor: "pointer", fontFamily: font.display, fontWeight: 600, fontSize: 13,
+                    border: `1.5px solid ${bk.crew[c.id] ? T.hivis : T.line}`, background: bk.crew[c.id] ? T.hivis : "#fff", color: bk.crew[c.id] ? "#fff" : T.ink }}>
+                  {c.name}
+                </button>
+              ))}
+              {data.crew.length === 0 && <span style={{ fontSize: 13, color: T.sub }}>Add crew on the Crew tab first.</span>}
+            </div>
+          </Field>
+          <Field label="Where (job)">
+            <select style={inputStyle} value={bk.jobId} onChange={(e) => setBk({ ...bk, jobId: e.target.value })}>
+              <option value="">Pick a job…</option>
+              {activeJobs.map((j) => <option key={j.id} value={j.id}>{j.name}</option>)}
+            </select>
+          </Field>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+            <Field label="From"><input style={inputStyle} type="date" value={bk.start} onChange={(e) => setBk({ ...bk, start: e.target.value })} /></Field>
+            <Field label="To"><input style={inputStyle} type="date" value={bk.end} onChange={(e) => setBk({ ...bk, end: e.target.value })} /></Field>
+          </div>
+          <label style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 14, color: T.ink, marginBottom: 10, cursor: "pointer" }}>
+            <input type="checkbox" checked={bk.skipWeekends} onChange={(e) => setBk({ ...bk, skipWeekends: e.target.checked })} style={{ width: 18, height: 18 }} />
+            Skip weekends
+          </label>
+          <div style={{ fontSize: 13, color: T.sub, marginBottom: 10 }}>
+            {bkCrewIds.length && bk.jobId && bkDays.length
+              ? <><b style={{ color: T.ink }}>{bkCrewIds.length}</b> crew × <b style={{ color: T.ink }}>{bkDays.length}</b> day{bkDays.length > 1 ? "s" : ""} = <b style={{ color: T.ink }}>{bkCrewIds.length * bkDays.length}</b> shifts{bkDays.length ? ` (${shortDate(bkDays[0])}–${shortDate(bkDays[bkDays.length - 1])})` : ""}</>
+              : "Pick crew, a job, and a date range."}
+          </div>
+          <Btn onClick={book} style={{ width: "100%", opacity: bkCrewIds.length && bk.jobId && bkDays.length ? 1 : 0.4 }}>Book it</Btn>
+        </Card>
+      )}
+
+      {/* Booked: who / where / how long */}
+      <Card style={{ borderLeft: `4px solid ${booked.length ? T.in : T.line}` }}>
+        <Eyebrow color={T.in}>Booked {dayLabel.split(",")[0]} · {booked.length}</Eyebrow>
+        {booked.length === 0 ? (
+          <div style={{ fontSize: 14, marginTop: 8, color: T.sub }}>Nobody booked this day yet.</div>
+        ) : (
+          <div style={{ marginTop: 6 }}>
+            {booked.map(({ s, c, j, run }) => (
+              <div key={s.id} style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 0", borderBottom: `1px solid ${T.line}` }}>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontFamily: font.display, fontWeight: 700, fontSize: 16 }}>{c.name}</div>
+                  <div style={{ fontSize: 13, color: T.ink }}>{j ? j.name : "—"}</div>
+                  <div style={{ fontSize: 12, color: T.sub, marginTop: 1 }}>
+                    {run.days === 1
+                      ? "single day"
+                      : `${run.days} days · ${shortDate(run.start)}–${shortDate(run.end)} · day ${run.idx} of ${run.days}`}
+                  </div>
+                </div>
+                <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                  <button onClick={() => removeDay(c.id)} style={{ background: T.inkSoft, border: "none", color: T.ink, borderRadius: 8, padding: "5px 9px", cursor: "pointer", fontFamily: font.display, fontWeight: 600, fontSize: 12 }}>Off this day</button>
+                  {run.days > 1 && <button onClick={() => clearRun(c.id, s.jobId)} style={{ background: "transparent", border: `1px solid ${T.line}`, color: T.out, borderRadius: 8, padding: "5px 9px", cursor: "pointer", fontFamily: font.display, fontWeight: 600, fontSize: 12 }}>Clear run</button>}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </Card>
+
+      {/* Available next */}
+      <Card style={{ borderLeft: `4px solid ${available.length ? T.hivis : T.line}` }}>
+        <Eyebrow color={available.length ? T.hivis : T.sub}>Available {dayLabel.split(",")[0]} · {available.length}</Eyebrow>
+        {available.length === 0 ? (
+          <div style={{ fontSize: 14, marginTop: 6 }}>Everyone is booked this day.</div>
+        ) : (
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 8 }}>
+            {available.map((c) => (
+              <button key={c.id}
+                onClick={() => setBk({ crew: { [c.id]: true }, jobId: "", start: day, end: day, skipWeekends: true }) || setBooking(true)}
+                style={{ background: T.hivisSoft, color: T.hivis, border: "none", borderRadius: 999, padding: "7px 12px", cursor: "pointer", fontFamily: font.display, fontWeight: 700, fontSize: 13 }}>
+                {c.name} +
+              </button>
+            ))}
+          </div>
+        )}
+        <div style={{ fontSize: 12, color: T.sub, marginTop: 8 }}>Tap an available name to start a booking with them on this day.</div>
+      </Card>
+      </>)}
+    </div>
+  );
+}
+
+// ---------- CREW ----------
+function Crew({ data, save }) {
+  const [adding, setAdding] = useState(false);
+  const [importing, setImporting] = useState(false);
+  const [logFor, setLogFor] = useState(null);
+  const [rateFor, setRateFor] = useState(null);
+  const [rateVal, setRateVal] = useState("");
+  const [form, setForm] = useState({ name: "", rate: "", jobId: "" });
+  const [log, setLog] = useState({ hours: "", date: todayStr() });
+  const [sheetUrl, setSheetUrl] = useState("");
+  const [paste, setPaste] = useState("");
+  const [importMsg, setImportMsg] = useState(null);
+  const tot = useTotals(data);
+
+  const addGuy = () => {
+    if (!form.name || !form.rate) return;
+    save({ ...data, crew: [...data.crew, { id: uid(), name: form.name, rate: parseFloat(form.rate), jobId: form.jobId || null }], seeded: false });
+    setForm({ name: "", rate: "", jobId: "" });
+    setAdding(false);
+  };
+
+  const assign = (crewId, jobId) =>
+    save({ ...data, crew: data.crew.map((c) => (c.id === crewId ? { ...c, jobId: jobId || null } : c)) });
+
+  const saveRate = (id) => {
+    const r = parseFloat(rateVal);
+    if (isNaN(r) || r <= 0) return;
+    save({ ...data, crew: data.crew.map((c) => (c.id === id ? { ...c, rate: r } : c)) });
+    setRateFor(null);
+    setRateVal("");
+  };
+
+  const logHours = (guy) => {
+    if (!log.hours || !guy.jobId) return;
+    save({
+      ...data,
+      timeEntries: [...data.timeEntries, { id: uid(), crewId: guy.id, jobId: guy.jobId, hours: parseFloat(log.hours), date: log.date }],
+      seeded: false,
+    });
+    setLog({ hours: "", date: todayStr() });
+    setLogFor(null);
+  };
+
+  const removeGuy = (id) => {
+    save({ ...data, crew: data.crew.filter((c) => c.id !== id) });
+  };
+
+  // ----- Google Form hours import -----
+  const importRows = (text) => {
+    const lines = text.trim().split(/\r?\n/).filter((l) => l.trim());
+    const entries = [];
+    const skipped = [];
+    lines.forEach((line, i) => {
+      let parts;
+      if (line.includes("\t")) parts = line.split("\t");
+      else if (line.includes(",")) parts = line.split(",");
+      else parts = line.split(/\s{2,}/); // PDF columns separated by gaps
+      parts = parts.map((p) => p.replace(/^"|"$/g, "").trim()).filter((p) => p !== "");
+      // Drop Google Forms timestamp column if present (looks like 6/12/2026 14:03:11)
+      if (parts.length >= 4 && /\d{1,2}\/\d{1,2}\/\d{2,4}\s+\d{1,2}:/.test(parts[0])) parts = parts.slice(1);
+      // Skip an obvious header row
+      if (i === 0 && /name/i.test(parts[0] || "") && /hour/i.test(line)) return;
+      const [nameRaw, jobRaw, hoursRaw, dateRaw] = parts;
+      const guy = data.crew.find((c) => nameRaw && c.name.toLowerCase() === nameRaw.toLowerCase())
+        || data.crew.find((c) => nameRaw && nameRaw.toLowerCase().includes(c.name.toLowerCase()));
+      const job = data.jobs.find((j) => jobRaw && j.name.toLowerCase() === jobRaw.toLowerCase())
+        || data.jobs.find((j) => jobRaw && j.name.toLowerCase().includes(jobRaw.toLowerCase()))
+        || data.jobs.find((j) => jobRaw && jobRaw.toLowerCase().includes(j.name.toLowerCase()));
+      const hours = parseFloat(hoursRaw);
+      if (!guy) { skipped.push(`Row ${i + 1}: no crew match for "${nameRaw || "?"}"`); return; }
+      if (!job) { skipped.push(`Row ${i + 1}: no job match for "${jobRaw || "?"}"`); return; }
+      if (isNaN(hours) || hours <= 0) { skipped.push(`Row ${i + 1}: bad hours "${hoursRaw || "?"}"`); return; }
+      entries.push({ id: uid(), crewId: guy.id, jobId: job.id, hours, date: parseDateFlexible(dateRaw) || todayStr() });
+    });
+    if (entries.length) {
+      save({ ...data, timeEntries: [...data.timeEntries, ...entries], seeded: false });
+    }
+    setImportMsg(
+      `${entries.length} time ${entries.length === 1 ? "entry" : "entries"} imported.` +
+      (skipped.length ? ` Skipped ${skipped.length}: ${skipped.slice(0, 3).join("; ")}${skipped.length > 3 ? "…" : ""}` : "")
+    );
+    if (entries.length) setPaste("");
+  };
+
+  const fetchSheet = async () => {
+    if (!sheetUrl) return;
+    setImportMsg("Trying to reach the sheet…");
+    try {
+      const r = await fetch(sheetUrl);
+      if (!r.ok) throw new Error("bad response");
+      const text = await r.text();
+      if (text.trim().startsWith("<")) throw new Error("got a webpage, not CSV");
+      importRows(text);
+    } catch {
+      setImportMsg("Couldn't reach the sheet from inside this app (the app's sandbox blocks most outside connections). Use the paste box or PDF upload instead.");
+    }
+  };
+
+  // ----- PDF import (e.g. a Google Form responses PDF) -----
+  const loadPdfJs = () =>
+    new Promise((resolve, reject) => {
+      if (window.pdfjsLib) return resolve(window.pdfjsLib);
+      const s = document.createElement("script");
+      s.src = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js";
+      s.onload = () => {
+        try {
+          window.pdfjsLib.GlobalWorkerOptions.workerSrc =
+            "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+        } catch (e) {}
+        resolve(window.pdfjsLib);
+      };
+      s.onerror = () => reject(new Error("script load failed"));
+      document.body.appendChild(s);
+    });
+
+  const handlePdf = async (file) => {
+    if (!file) return;
+    setImportMsg("Reading PDF…");
+    try {
+      const pdfjsLib = await loadPdfJs();
+      const buf = await file.arrayBuffer();
+      const pdf = await pdfjsLib.getDocument({ data: buf }).promise;
+      let allText = "";
+      for (let p = 1; p <= pdf.numPages; p++) {
+        const page = await pdf.getPage(p);
+        const content = await page.getTextContent();
+        // Rebuild lines by grouping text items on the same vertical position
+        const rows = {};
+        content.items.forEach((it) => {
+          const y = Math.round(it.transform[5]);
+          (rows[y] = rows[y] || []).push({ x: it.transform[4], str: it.str });
+        });
+        Object.keys(rows)
+          .map(Number)
+          .sort((a, b) => b - a) // top of page first
+          .forEach((y) => {
+            const line = rows[y]
+              .sort((a, b) => a.x - b.x)
+              .map((c) => c.str)
+              .join("  ") // double space marks a column gap
+              .replace(/\s{3,}/g, "  ")
+              .trim();
+            if (line) allText += line + "\n";
+          });
+      }
+      if (!allText.trim()) throw new Error("no text — PDF may be scanned images");
+      importRows(allText);
+    } catch (e) {
+      setImportMsg(
+        "Couldn't read that PDF in-app" +
+          (/scanned/.test(e.message) ? " (it looks like scanned images, which need OCR). " : " (the sandbox may have blocked the PDF reader). ") +
+          "The paste box always works: open the form's response sheet, copy the rows, paste above."
+      );
+    }
+  };
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 8 }}>
+        <Eyebrow>Crew · {data.crew.filter(isCoreCrew).length} on the books</Eyebrow>
+        <div style={{ display: "flex", gap: 6 }}>
+          <Btn small kind="ink" onClick={() => { setImporting(!importing); setAdding(false); }}>{importing ? "Close" : "Import hours"}</Btn>
+          <Btn small onClick={() => { setAdding(!adding); setImporting(false); }}>{adding ? "Close" : "+ Add"}</Btn>
+        </div>
+      </div>
+
+      {importing && (
+        <Card>
+          <Eyebrow color={T.hivis}>Hours from your Google Form</Eyebrow>
+          <div style={{ fontSize: 13, color: T.sub, margin: "6px 0 10px", lineHeight: 1.45 }}>
+            Set your form's answers in this order: <b>Name, Job, Hours, Date</b>. Then import three ways: upload a <b>PDF</b> of the form responses, paste a published-CSV link and tap Fetch, or copy rows from the response sheet and paste them in. Names and jobs match what's in this app.
+          </div>
+
+          <label style={{ display: "block", marginBottom: 10 }}>
+            <div
+              style={{
+                background: T.hivisSoft, color: T.hivis, border: `1.5px dashed ${T.hivis}`,
+                borderRadius: 10, padding: "14px 12px", textAlign: "center", cursor: "pointer",
+                fontFamily: font.display, fontWeight: 700, fontSize: 15,
+              }}
+            >
+              ⬆ Upload PDF of form responses
+            </div>
+            <input
+              type="file"
+              accept="application/pdf,.pdf"
+              style={{ display: "none" }}
+              onChange={(e) => { handlePdf(e.target.files[0]); e.target.value = ""; }}
+            />
+          </label>
+
+          <div style={{ display: "flex", gap: 8, marginBottom: 8 }}>
+            <input style={{ ...inputStyle, flex: 1 }} placeholder="Published CSV link (optional)" value={sheetUrl} onChange={(e) => setSheetUrl(e.target.value)} />
+            <Btn small kind="ink" onClick={fetchSheet}>Fetch</Btn>
+          </div>
+          <textarea
+            style={{ ...inputStyle, minHeight: 90, fontFamily: font.body, resize: "vertical" }}
+            placeholder={"Paste rows here, e.g.\nVictor Veliz\tFinchley\t8\t6/12/2026\nRichard Opoku Forson, Nicolet, 8, 6/12/2026"}
+            value={paste}
+            onChange={(e) => setPaste(e.target.value)}
+          />
+          <Btn onClick={() => paste.trim() && importRows(paste)} style={{ width: "100%", marginTop: 8 }}>Import pasted hours</Btn>
+          {importMsg && <div style={{ marginTop: 8, fontSize: 13, fontWeight: 600, color: T.ink }}>{importMsg}</div>}
+        </Card>
+      )}
+
+      {adding && (
+        <Card>
+          <Field label="Name">
+            <input style={inputStyle} value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="First name" />
+          </Field>
+          <Field label="Cost rate ($/hr — wage + burden)">
+            <input style={inputStyle} type="number" inputMode="decimal" value={form.rate} onChange={(e) => setForm({ ...form, rate: e.target.value })} placeholder="32" />
+          </Field>
+          <Field label="Assign to job">
+            <select style={inputStyle} value={form.jobId} onChange={(e) => setForm({ ...form, jobId: e.target.value })}>
+              <option value="">Unassigned for now</option>
+              {data.jobs.filter((j) => j.status === "active").map((j) => (
+                <option key={j.id} value={j.id}>{j.name}</option>
+              ))}
+            </select>
+          </Field>
+          <Btn onClick={addGuy} style={{ width: "100%" }}>Add to crew</Btn>
+        </Card>
+      )}
+
+      {data.crew.filter(isCoreCrew).map((c) => {
+        const weekCost = data.timeEntries
+          .filter((e) => e.crewId === c.id && e.date.startsWith(tot.month))
+          .reduce((s, e) => s + e.hours * c.rate, 0);
+        return (
+          <Card key={c.id} style={{ borderLeft: c.jobId ? `4px solid ${T.in}` : `4px solid ${T.hivis}` }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+              <div style={{ fontFamily: font.display, fontWeight: 700, fontSize: 19 }}>{c.name}</div>
+              {rateFor === c.id ? (
+                <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
+                  <input
+                    style={{ ...inputStyle, width: 86, padding: "6px 8px" }}
+                    type="number" inputMode="decimal" autoFocus
+                    value={rateVal}
+                    onChange={(e) => setRateVal(e.target.value)}
+                    placeholder={String(c.rate)}
+                  />
+                  <Btn small onClick={() => saveRate(c.id)}>Set</Btn>
+                </div>
+              ) : (
+                <button
+                  onClick={() => { setRateFor(c.id); setRateVal(String(c.rate)); }}
+                  style={{ background: T.inkSoft, border: "none", borderRadius: 8, padding: "5px 10px", cursor: "pointer", fontFamily: font.num, fontWeight: 700, fontSize: 14, color: T.ink }}
+                >
+                  ${c.rate}/hr ✎
+                </button>
+              )}
+            </div>
+            <div style={{ fontSize: 12, color: T.sub, marginBottom: 8 }}>
+              {fmt(weekCost)} labor this month
+            </div>
+            <div style={{ display: "flex", gap: 8 }}>
+              <select
+                value={c.jobId || ""}
+                onChange={(e) => assign(c.id, e.target.value)}
+                style={{ ...inputStyle, flex: 1, padding: "9px 10px" }}
+              >
+                <option value="">Unassigned</option>
+                {data.jobs.filter((j) => j.status === "active").map((j) => (
+                  <option key={j.id} value={j.id}>{j.name}</option>
+                ))}
+              </select>
+              <Btn small kind="ink" onClick={() => setLogFor(logFor === c.id ? null : c.id)} style={{ opacity: c.jobId ? 1 : 0.4 }}>
+                Log hrs
+              </Btn>
+              <Btn small kind="danger" onClick={() => removeGuy(c.id)}>×</Btn>
+            </div>
+            {logFor === c.id && c.jobId && (
+              <div style={{ marginTop: 10, display: "flex", gap: 8 }}>
+                <input style={{ ...inputStyle, flex: 1 }} type="number" inputMode="decimal" placeholder="Hours" value={log.hours} onChange={(e) => setLog({ ...log, hours: e.target.value })} />
+                <input style={{ ...inputStyle, flex: 1.4 }} type="date" value={log.date} onChange={(e) => setLog({ ...log, date: e.target.value })} />
+                <Btn small onClick={() => logHours(c)}>Save</Btn>
+              </div>
+            )}
+          </Card>
+        );
+      })}
+    </div>
+  );
+}
+
+// ---------- JOBS ----------
+const fmtRange = (s, e) => {
+  if (!s && !e) return "";
+  const f = (x) => (x ? new Date(x + "T00:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" }) : "?");
+  if (s && e) return `${f(s)} – ${f(e)}`;
+  return s ? `from ${f(s)}` : `by ${f(e)}`;
+};
+const daysLeft = (end) => {
+  if (!end) return null;
+  const ms = new Date(end + "T00:00:00") - new Date(todayStr() + "T00:00:00");
+  return Math.round(ms / 86400000);
+};
+
+function Jobs({ data, save, focusJob, clearFocus }) {
+  const [adding, setAdding] = useState(false);
+  const [editId, setEditId] = useState(null);
+  const [confirmDel, setConfirmDel] = useState(null);
+  const [form, setForm] = useState({ name: "", client: "", revenue: "", address: "", start: "", end: "" });
+  const [edit, setEdit] = useState({});
+  const [picked, setPicked] = useState({});
+  const [expOpen, setExpOpen] = useState(null);
+  const [expForm, setExpForm] = useState({});
+  const [coOpen, setCoOpen] = useState(null);
+  const [coForm, setCoForm] = useState({});
+  const [subOpen, setSubOpen] = useState(null);
+  const [subForm, setSubForm] = useState({});
+  const [crewOpen, setCrewOpen] = useState(null);
+  const [viewPhoto, setViewPhoto] = useState(null);
+  const [photoBusy, setPhotoBusy] = useState(null);
+  const tot = useTotals(data);
+
+  // Order jobs by most-recent reported hours (newest at top, no/oldest activity at bottom)
+  const lastHrOf = (jid) => {
+    const ds = (data.timeEntries || []).filter((e) => e.jobId === jid).map((e) => e.date);
+    return ds.length ? ds.reduce((a, b) => (a > b ? a : b)) : "";
+  };
+  const jobsSorted = [...data.jobs].sort((a, b) => lastHrOf(b.id).localeCompare(lastHrOf(a.id)));
+
+  // Drill-in from Today: open this job's crew detail and scroll to it
+  useEffect(() => {
+    if (focusJob) {
+      setCrewOpen(focusJob);
+      if (typeof document !== "undefined") {
+        const el = document.getElementById("job-" + focusJob);
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+      clearFocus && clearFocus();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [focusJob]);
+
+  const addJob = () => {
+    if (!form.name) return;
+    const jobId = uid();
+    save({
+      ...data,
+      jobs: [...data.jobs, { id: jobId, name: form.name, client: form.client, address: form.address || "", revenue: parseFloat(form.revenue || 0), status: "active", start: form.start || "", end: form.end || "", expenses: [], changes: [] }],
+      crew: data.crew.map((c) => (picked[c.id] ? { ...c, jobId } : c)),
+      seeded: false,
+    });
+    setForm({ name: "", client: "", revenue: "", address: "", start: "", end: "" });
+    setPicked({});
+    setAdding(false);
+  };
+
+  const startEdit = (j) => {
+    setEditId(j.id);
+    setEdit({ name: j.name, client: j.client || "", revenue: String(j.revenue ?? ""), address: j.address || "", start: j.start || "", end: j.end || "" });
+    setConfirmDel(null);
+  };
+
+  const saveEdit = (id) => {
+    if (!edit.name) return;
+    save({
+      ...data,
+      jobs: data.jobs.map((j) => (j.id === id ? { ...j, name: edit.name, client: edit.client, address: edit.address || "", revenue: parseFloat(edit.revenue || 0), start: edit.start || "", end: edit.end || "" } : j)),
+      seeded: false,
+    });
+    setEditId(null);
+  };
+
+  const deleteJob = (id) => {
+    if (confirmDel !== id) { setConfirmDel(id); setTimeout(() => setConfirmDel((c) => (c === id ? null : c)), 3500); return; }
+    save({
+      ...data,
+      jobs: data.jobs.filter((j) => j.id !== id),
+      crew: data.crew.map((c) => (c.jobId === id ? { ...c, jobId: null } : c)),
+      schedule: (data.schedule || []).filter((s) => s.jobId !== id),
+      timeEntries: data.timeEntries.filter((e) => e.jobId !== id),
+      seeded: false,
+    });
+    setConfirmDel(null);
+    setEditId(null);
+  };
+
+  const attachPhoto = async (jobId, file) => {
+    if (!file) return;
+    setPhotoBusy(jobId);
+    try {
+      const dataUrl = await compressImage(file);
+      setExpForm((p) => ({ ...p, [jobId]: { ...p[jobId], photo: dataUrl } }));
+    } catch (e) {
+      // ignore; user can retry
+    }
+    setPhotoBusy(null);
+  };
+
+  const addExpense = (jobId) => {
+    const e = expForm[jobId] || {};
+    const amt = parseFloat(e.amount);
+    if (!e.label || isNaN(amt) || amt <= 0) return;
+    save({
+      ...data,
+      jobs: data.jobs.map((j) => (j.id === jobId ? { ...j, expenses: [...(j.expenses || []), { id: uid(), label: e.label.trim(), amount: amt, date: e.date || todayStr(), photo: e.photo || "" }] } : j)),
+      seeded: false,
+    });
+    setExpForm({ ...expForm, [jobId]: { label: "", amount: "", date: todayStr(), photo: "" } });
+  };
+
+  const removeExpense = (jobId, expId) =>
+    save({ ...data, jobs: data.jobs.map((j) => (j.id === jobId ? { ...j, expenses: (j.expenses || []).filter((x) => x.id !== expId) } : j)), seeded: false });
+
+  const addChange = (jobId) => {
+    const e = coForm[jobId] || {};
+    const cost = parseFloat(e.cost || 0);
+    const billed = parseFloat(e.billed || 0);
+    if (!e.label || (isNaN(cost) && isNaN(billed))) return;
+    save({
+      ...data,
+      jobs: data.jobs.map((j) => (j.id === jobId ? { ...j, changes: [...(j.changes || []), { id: uid(), label: e.label.trim(), cost: isNaN(cost) ? 0 : cost, billed: isNaN(billed) ? 0 : billed, date: e.date || todayStr() }] } : j)),
+      seeded: false,
+    });
+    setCoForm({ ...coForm, [jobId]: { label: "", cost: "", billed: "", date: todayStr() } });
+  };
+
+  const removeChange = (jobId, coId) =>
+    save({ ...data, jobs: data.jobs.map((j) => (j.id === jobId ? { ...j, changes: (j.changes || []).filter((x) => x.id !== coId) } : j)), seeded: false });
+
+  const addSub = (jobId) => {
+    const e = subForm[jobId] || {};
+    const price = parseFloat(e.price || 0);
+    if (!e.name || !e.name.trim()) return;
+    save({
+      ...data,
+      jobs: data.jobs.map((j) => (j.id === jobId ? { ...j, subs: [...(j.subs || []), { id: uid(), name: e.name.trim(), price: isNaN(price) ? 0 : price, scope: (e.scope || "").trim() }] } : j)),
+      seeded: false,
+    });
+    setSubForm({ ...subForm, [jobId]: { name: "", price: "", scope: "" } });
+  };
+
+  const removeSub = (jobId, subId) =>
+    save({ ...data, jobs: data.jobs.map((j) => (j.id === jobId ? { ...j, subs: (j.subs || []).filter((x) => x.id !== subId) } : j)), seeded: false });
+
+  const toggleStatus = (id) =>
+    save({ ...data, jobs: data.jobs.map((j) => (j.id === id ? { ...j, status: j.status === "active" ? "done" : "active" } : j)) });
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <Eyebrow>Jobs · revenue vs labor</Eyebrow>
+        <Btn small onClick={() => { setAdding(!adding); setEditId(null); }}>{adding ? "Close" : "+ Add job"}</Btn>
+      </div>
+
+      {adding && (
+        <Card>
+          <Field label="Job name"><input style={inputStyle} value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="Smith deck rebuild" /></Field>
+          <Field label="Client"><input style={inputStyle} value={form.client} onChange={(e) => setForm({ ...form, client: e.target.value })} /></Field>
+          <Field label="Contract / billed amount ($)"><input style={inputStyle} type="number" inputMode="decimal" value={form.revenue} onChange={(e) => setForm({ ...form, revenue: e.target.value })} /></Field>
+          <Field label="Address (for Google Maps)"><input style={inputStyle} value={form.address} onChange={(e) => setForm({ ...form, address: e.target.value })} placeholder="2335 rue de Bordeaux, Montreal" /></Field>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+            <Field label="Start date"><input style={inputStyle} type="date" value={form.start} onChange={(e) => setForm({ ...form, start: e.target.value })} /></Field>
+            <Field label="Target end date"><input style={inputStyle} type="date" value={form.end} onChange={(e) => setForm({ ...form, end: e.target.value })} /></Field>
+          </div>
+          <Field label="Put crew on it now">
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+              {data.crew.filter(isCoreCrew).map((c) => (
+                <button
+                  key={c.id}
+                  onClick={() => setPicked({ ...picked, [c.id]: !picked[c.id] })}
+                  style={{
+                    padding: "7px 12px", borderRadius: 999, cursor: "pointer",
+                    fontFamily: font.display, fontWeight: 600, fontSize: 13,
+                    border: `1.5px solid ${picked[c.id] ? T.hivis : T.line}`,
+                    background: picked[c.id] ? T.hivis : "#fff",
+                    color: picked[c.id] ? "#fff" : T.ink,
+                  }}
+                >
+                  {c.name}{c.jobId && !picked[c.id] ? " (busy)" : ""}
+                </button>
+              ))}
+              {data.crew.length === 0 && <span style={{ fontSize: 13, color: T.sub }}>No crew yet — add them on the Crew tab.</span>}
+            </div>
+          </Field>
+          <Btn onClick={addJob} style={{ width: "100%" }}>Add job{Object.values(picked).filter(Boolean).length ? ` + assign ${Object.values(picked).filter(Boolean).length}` : ""}</Btn>
+        </Card>
+      )}
+
+      <Card style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 14px" }}>
+        <div>
+          <div style={{ fontFamily: font.display, fontWeight: 700, fontSize: 14 }}>Overhead</div>
+          <div style={{ fontSize: 11, color: T.sub }}>G&amp;A applied to revenue, for net margin</div>
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+          <input type="number" inputMode="decimal" value={Math.round((data.overheadPct ?? 0.10) * 100)}
+            onChange={(e) => { const v = Math.max(0, Math.min(100, parseFloat(e.target.value) || 0)); save({ ...data, overheadPct: v / 100 }); }}
+            style={{ ...inputStyle, width: 70, textAlign: "right" }} />
+          <span style={{ fontFamily: font.num, fontWeight: 700, fontSize: 15 }}>%</span>
+        </div>
+      </Card>
+
+      {jobsSorted.map((j) => {
+        const labor = tot.laborByJob[j.id] || 0;
+        const materials = jobExpenseTotal(j);
+        const subsTotal = jobSubTotal(j);
+        const coCost = jobChangeCost(j);
+        const coBilled = jobChangeBilled(j);
+        const cost = labor + materials + subsTotal + coCost;
+        const billed = (j.revenue || 0) + coBilled;
+        const gross = billed - cost;
+        const grossPct = billed > 0 ? (gross / billed) * 100 : 0;
+        const overhead = billed * (data.overheadPct ?? 0.10);
+        const net = gross - overhead;
+        const netPct = billed > 0 ? (net / billed) * 100 : 0;
+        const pct = billed > 0 ? Math.min(100, (cost / billed) * 100) : 0;
+        const guys = data.crew.filter((c) => c.jobId === j.id).map((c) => c.name);
+        const dl = daysLeft(j.end);
+
+        if (editId === j.id) {
+          return (
+            <Card key={j.id} style={{ borderLeft: `4px solid ${T.ink}` }}>
+              <Field label="Job name"><input style={inputStyle} value={edit.name} onChange={(e) => setEdit({ ...edit, name: e.target.value })} /></Field>
+              <Field label="Client"><input style={inputStyle} value={edit.client} onChange={(e) => setEdit({ ...edit, client: e.target.value })} /></Field>
+              <Field label="Contract / billed amount ($)"><input style={inputStyle} type="number" inputMode="decimal" value={edit.revenue} onChange={(e) => setEdit({ ...edit, revenue: e.target.value })} /></Field>
+              <Field label="Address (for Google Maps)"><input style={inputStyle} value={edit.address} onChange={(e) => setEdit({ ...edit, address: e.target.value })} /></Field>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+                <Field label="Start date"><input style={inputStyle} type="date" value={edit.start} onChange={(e) => setEdit({ ...edit, start: e.target.value })} /></Field>
+                <Field label="Target end date"><input style={inputStyle} type="date" value={edit.end} onChange={(e) => setEdit({ ...edit, end: e.target.value })} /></Field>
+              </div>
+              <div style={{ display: "flex", gap: 8, marginTop: 4 }}>
+                <Btn onClick={() => saveEdit(j.id)} style={{ flex: 1 }}>Save changes</Btn>
+                <Btn kind="ghost" onClick={() => setEditId(null)}>Cancel</Btn>
+              </div>
+              <button
+                onClick={() => deleteJob(j.id)}
+                style={{ width: "100%", marginTop: 10, background: confirmDel === j.id ? T.out : "transparent", color: confirmDel === j.id ? "#fff" : T.out, border: `1.5px solid ${T.out}`, borderRadius: 10, padding: "11px", cursor: "pointer", fontFamily: font.display, fontWeight: 700, fontSize: 14 }}
+              >
+                {confirmDel === j.id ? "Tap again to delete this job" : "Delete job"}
+              </button>
+              {confirmDel === j.id && (
+                <div style={{ fontSize: 12, color: T.sub, marginTop: 6 }}>
+                  Crew and schedule will be freed up. Logged hours and this job's expense entries are removed.
+                </div>
+              )}
+            </Card>
+          );
+        }
+
+        return (
+          <Card key={j.id} id={`job-${j.id}`} style={{ opacity: j.status === "done" ? 0.7 : 1 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+              <div style={{ fontFamily: font.display, fontWeight: 700, fontSize: 19 }}>{j.name}</div>
+              <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
+                <button onClick={() => toggleStatus(j.id)} style={{ background: j.status === "active" ? T.hivisSoft : T.inkSoft, color: j.status === "active" ? T.hivis : T.sub, border: "none", borderRadius: 8, fontFamily: font.display, fontWeight: 700, fontSize: 12, padding: "4px 10px", cursor: "pointer", textTransform: "uppercase" }}>
+                  {j.status}
+                </button>
+                <button onClick={() => startEdit(j)} style={{ background: T.inkSoft, color: T.ink, border: "none", borderRadius: 8, fontFamily: font.display, fontWeight: 700, fontSize: 12, padding: "4px 10px", cursor: "pointer" }}>
+                  Edit
+                </button>
+              </div>
+            </div>
+            <div style={{ fontSize: 12, color: T.sub, marginBottom: 6 }}>
+              {j.client}{guys.length ? ` · crew: ${guys.join(", ")}` : " · no crew assigned"}
+            </div>
+            {j.address && (
+              <div style={{ fontSize: 13, marginBottom: 8 }}>
+                <MapsLink address={j.address} />
+              </div>
+            )}
+            {(j.start || j.end) && (
+              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
+                <span style={{ fontFamily: font.display, fontWeight: 600, fontSize: 12, color: T.ink, background: T.inkSoft, borderRadius: 6, padding: "3px 8px" }}>
+                  {fmtRange(j.start, j.end)}
+                </span>
+                {j.status === "active" && dl !== null && (
+                  <span style={{ fontSize: 12, fontWeight: 700, color: dl < 0 ? T.out : dl <= 3 ? T.hivis : T.sub }}>
+                    {dl < 0 ? `${-dl}d overdue` : dl === 0 ? "due today" : `${dl}d left`}
+                  </span>
+                )}
+              </div>
+            )}
+            <div style={{ height: 12, background: T.inkSoft, borderRadius: 6, overflow: "hidden", marginBottom: 8 }}>
+              <div style={{ width: `${pct}%`, height: "100%", background: pct > 85 ? T.out : pct > 60 ? T.hivis : T.in }} />
+            </div>
+            <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, fontVariantNumeric: "tabular-nums" }}>
+              <span style={{ color: T.sub }}>Billed <b style={{ color: T.ink }}>{fmt(billed)}</b></span>
+              <span style={{ color: T.sub }}>Cost <b style={{ color: T.ink }}>{fmt(cost)}</b></span>
+            </div>
+            {billed > 0 && (
+              <div style={{ display: "flex", gap: 8, marginTop: 8 }}>
+                <div style={{ flex: 1, border: `1px solid ${T.line}`, borderRadius: 10, padding: "8px 10px" }}>
+                  <div style={{ fontSize: 10, letterSpacing: ".06em", textTransform: "uppercase", color: T.sub, fontWeight: 700 }}>Gross margin</div>
+                  <div style={{ fontFamily: font.num, fontWeight: 800, fontSize: 17, color: gross >= 0 ? T.in : T.out }}>{fmt(gross)}</div>
+                  <div style={{ fontSize: 12, fontWeight: 700, color: gross >= 0 ? T.in : T.out }}>{grossPct.toFixed(1)}%</div>
+                </div>
+                <div style={{ flex: 1, border: `1px solid ${T.line}`, borderRadius: 10, padding: "8px 10px" }}>
+                  <div style={{ fontSize: 10, letterSpacing: ".06em", textTransform: "uppercase", color: T.sub, fontWeight: 700 }}>Net margin</div>
+                  <div style={{ fontFamily: font.num, fontWeight: 800, fontSize: 17, color: net >= 0 ? T.in : T.out }}>{fmt(net)}</div>
+                  <div style={{ fontSize: 12, fontWeight: 700, color: net >= 0 ? T.in : T.out }}>{netPct.toFixed(1)}%</div>
+                </div>
+              </div>
+            )}
+            {billed === 0 && (
+              <div style={{ fontSize: 12, color: T.hivis, fontWeight: 600, marginTop: 6 }}>Set a contract amount (Edit) to see margins.</div>
+            )}
+            <div style={{ fontSize: 12, color: T.sub, marginTop: 6 }}>
+              Labor {fmt(labor)} · materials {fmt(materials)} · subs {fmt(subsTotal)} · overhead {fmt(overhead)}{coCost || coBilled ? ` · changes +${fmt(coBilled)}/−${fmt(coCost)}` : ""}
+            </div>
+
+            {(() => {
+              const jobEntries = (data.timeEntries || []).filter((e) => e.jobId === j.id);
+              if (jobEntries.length === 0) return null;
+              const rateOf = (cid) => { const c = data.crew.find((x) => x.id === cid); return c ? c.rate || 0 : 0; };
+              const nameOf = (cid) => { const c = data.crew.find((x) => x.id === cid); return c ? c.name : "—"; };
+              const crewCount = new Set(jobEntries.map((e) => e.crewId)).size;
+              // group by week, then crew
+              const wm = {};
+              jobEntries.forEach((e) => {
+                const ws = weekStartOf(e.date);
+                const w = (wm[ws] = wm[ws] || { hours: 0, cost: 0, crew: {} });
+                w.hours += e.hours; w.cost += e.hours * rateOf(e.crewId);
+                w.crew[e.crewId] = (w.crew[e.crewId] || 0) + e.hours;
+              });
+              const weeks = Object.entries(wm).map(([ws, v]) => ({
+                ws, hours: v.hours, cost: v.cost,
+                crew: Object.entries(v.crew).map(([cid, h]) => ({ cid, name: nameOf(cid), hours: h, cost: h * rateOf(cid) })).sort((a, b) => b.hours - a.hours),
+              })).sort((a, b) => b.ws.localeCompare(a.ws));
+              const r1 = (x) => Math.round(x * 10) / 10;
+              return (
+                <div style={{ marginTop: 8 }}>
+                  <button onClick={() => setCrewOpen(crewOpen === j.id ? null : j.id)}
+                    style={{ background: "none", border: "none", color: T.hivis, cursor: "pointer", fontFamily: font.display, fontWeight: 700, fontSize: 13, padding: 0 }}>
+                    {crewOpen === j.id ? "Hide crew hours" : `Who worked here · ${crewCount} ▸`}
+                  </button>
+                  {crewOpen === j.id && (
+                    <div style={{ marginTop: 8 }}>
+                      {weeks.map((w) => (
+                        <div key={w.ws} style={{ padding: "9px 0", borderBottom: `1px solid ${T.line}` }}>
+                          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 4 }}>
+                            <span style={{ fontFamily: font.display, fontWeight: 700, fontSize: 13 }}>{shortDate(w.ws)}–{shortDate(addDays(w.ws, 6))}</span>
+                            <span style={{ fontFamily: font.num, fontWeight: 800, fontSize: 14 }}>{r1(w.hours)}h <span style={{ color: T.sub, fontWeight: 600, fontSize: 12 }}>· {fmt(w.cost)}</span></span>
+                          </div>
+                          {w.crew.map((r) => (
+                            <div key={r.cid} style={{ display: "flex", justifyContent: "space-between", fontSize: 13, padding: "2px 0" }}>
+                              <span style={{ color: T.ink }}>{r.name}</span>
+                              <span style={{ fontFamily: font.num, color: T.sub }}>{r1(r.hours)}h · {fmt(r.cost)}</span>
+                            </div>
+                          ))}
+                        </div>
+                      ))}
+                      <div style={{ display: "flex", justifyContent: "space-between", paddingTop: 7, fontSize: 13 }}>
+                        <span style={{ color: T.sub, fontWeight: 700 }}>Total</span>
+                        <span style={{ fontFamily: font.num, fontWeight: 800 }}>{r1(jobEntries.reduce((s, e) => s + e.hours, 0))}h · {fmt(labor)}</span>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            })()}
+
+            <div style={{ marginTop: 10, borderTop: `1px solid ${T.line}`, paddingTop: 10 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <Eyebrow>Job expenses</Eyebrow>
+                <button onClick={() => setExpOpen(expOpen === j.id ? null : j.id)} style={{ background: "none", border: "none", color: T.hivis, cursor: "pointer", fontFamily: font.display, fontWeight: 700, fontSize: 13 }}>
+                  {expOpen === j.id ? "Close" : "+ Add expense"}
+                </button>
+              </div>
+              {(j.expenses || []).map((x) => (
+                <div key={x.id} style={{ display: "flex", alignItems: "center", gap: 8, padding: "6px 0", fontSize: 13 }}>
+                  {x.photo
+                    ? <img src={x.photo} onClick={() => setViewPhoto(x.photo)} alt="receipt" style={{ width: 34, height: 34, objectFit: "cover", borderRadius: 6, cursor: "pointer", flex: "0 0 auto", border: `1px solid ${T.line}` }} />
+                    : <span style={{ width: 34, flex: "0 0 auto" }} />}
+                  <span style={{ flex: 1, color: T.ink }}>{x.label}<span style={{ color: T.sub }}> · {x.date.slice(5)}</span></span>
+                  <span style={{ fontFamily: font.num, fontWeight: 700, color: T.out, fontVariantNumeric: "tabular-nums" }}>{fmt(x.amount)}</span>
+                  <button onClick={() => removeExpense(j.id, x.id)} style={{ background: "none", border: "none", color: T.sub, fontSize: 16, cursor: "pointer", padding: 2 }} aria-label="Remove">×</button>
+                </div>
+              ))}
+              {(j.expenses || []).length === 0 && expOpen !== j.id && (
+                <div style={{ fontSize: 12, color: T.sub, marginTop: 4 }}>No materials or subs logged yet.</div>
+              )}
+              {expOpen === j.id && (
+                <div style={{ marginTop: 8 }}>
+                  <div style={{ display: "flex", gap: 6 }}>
+                    <input style={{ ...inputStyle, flex: 1.4 }} placeholder="What" value={(expForm[j.id]?.label) || ""} onChange={(e) => setExpForm({ ...expForm, [j.id]: { ...expForm[j.id], label: e.target.value } })} />
+                    <input style={{ ...inputStyle, flex: 1 }} type="number" inputMode="decimal" placeholder="$" value={(expForm[j.id]?.amount) || ""} onChange={(e) => setExpForm({ ...expForm, [j.id]: { ...expForm[j.id], amount: e.target.value } })} />
+                    <Btn small onClick={() => addExpense(j.id)}>Add</Btn>
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 8 }}>
+                    <label style={{ display: "inline-flex", alignItems: "center", gap: 6, background: T.hivisSoft, color: T.hivis, border: `1.5px solid ${T.hivis}`, borderRadius: 10, padding: "8px 12px", cursor: "pointer", fontFamily: font.display, fontWeight: 700, fontSize: 13 }}>
+                      📷 {expForm[j.id]?.photo ? "Retake" : "Attach receipt"}
+                      <input type="file" accept="image/*" capture="environment" style={{ display: "none" }}
+                        onChange={(e) => { attachPhoto(j.id, e.target.files[0]); e.target.value = ""; }} />
+                    </label>
+                    {photoBusy === j.id && <span style={{ fontSize: 12, color: T.sub }}>Processing photo…</span>}
+                    {expForm[j.id]?.photo && (
+                      <>
+                        <img src={expForm[j.id].photo} onClick={() => setViewPhoto(expForm[j.id].photo)} alt="receipt preview" style={{ width: 40, height: 40, objectFit: "cover", borderRadius: 6, cursor: "pointer", border: `1px solid ${T.line}` }} />
+                        <button onClick={() => setExpForm({ ...expForm, [j.id]: { ...expForm[j.id], photo: "" } })} style={{ background: "none", border: "none", color: T.out, fontSize: 13, cursor: "pointer", fontWeight: 700 }}>Remove</button>
+                      </>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div style={{ marginTop: 10, borderTop: `1px solid ${T.line}`, paddingTop: 10 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <Eyebrow color={T.hivis}>Scope changes / change orders</Eyebrow>
+                <button onClick={() => setCoOpen(coOpen === j.id ? null : j.id)} style={{ background: "none", border: "none", color: T.hivis, cursor: "pointer", fontFamily: font.display, fontWeight: 700, fontSize: 13 }}>
+                  {coOpen === j.id ? "Close" : "+ Add change"}
+                </button>
+              </div>
+              {(j.changes || []).map((x) => (
+                <div key={x.id} style={{ display: "flex", alignItems: "center", gap: 8, padding: "6px 0", fontSize: 13 }}>
+                  <span style={{ flex: 1, color: T.ink }}>{x.label}<span style={{ color: T.sub }}> · {x.date.slice(5)}</span></span>
+                  <span style={{ fontFamily: font.num, fontWeight: 700, color: T.in, fontVariantNumeric: "tabular-nums" }} title="billed to client">+{fmt(x.billed)}</span>
+                  <span style={{ fontFamily: font.num, fontWeight: 700, color: T.out, fontVariantNumeric: "tabular-nums" }} title="added cost">−{fmt(x.cost)}</span>
+                  <button onClick={() => removeChange(j.id, x.id)} style={{ background: "none", border: "none", color: T.sub, fontSize: 16, cursor: "pointer", padding: 2 }} aria-label="Remove">×</button>
+                </div>
+              ))}
+              {(j.changes || []).length === 0 && coOpen !== j.id && (
+                <div style={{ fontSize: 12, color: T.sub, marginTop: 4 }}>No change orders logged.</div>
+              )}
+              {coOpen === j.id && (
+                <div style={{ marginTop: 8 }}>
+                  <input style={{ ...inputStyle, marginBottom: 6 }} placeholder="What changed (e.g. added bathroom door)" value={(coForm[j.id]?.label) || ""} onChange={(e) => setCoForm({ ...coForm, [j.id]: { ...coForm[j.id], label: e.target.value } })} />
+                  <div style={{ display: "flex", gap: 6 }}>
+                    <input style={{ ...inputStyle, flex: 1 }} type="number" inputMode="decimal" placeholder="Bill client $" value={(coForm[j.id]?.billed) || ""} onChange={(e) => setCoForm({ ...coForm, [j.id]: { ...coForm[j.id], billed: e.target.value } })} />
+                    <input style={{ ...inputStyle, flex: 1 }} type="number" inputMode="decimal" placeholder="Added cost $" value={(coForm[j.id]?.cost) || ""} onChange={(e) => setCoForm({ ...coForm, [j.id]: { ...coForm[j.id], cost: e.target.value } })} />
+                    <Btn small onClick={() => addChange(j.id)}>Add</Btn>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div style={{ marginTop: 10, borderTop: `1px solid ${T.line}`, paddingTop: 10 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <Eyebrow color={T.hivis}>Subcontractors</Eyebrow>
+                <button onClick={() => setSubOpen(subOpen === j.id ? null : j.id)} style={{ background: "none", border: "none", color: T.hivis, cursor: "pointer", fontFamily: font.display, fontWeight: 700, fontSize: 13 }}>
+                  {subOpen === j.id ? "Close" : "+ Add sub"}
+                </button>
+              </div>
+              {(j.subs || []).map((x) => (
+                <div key={x.id} style={{ display: "flex", alignItems: "flex-start", gap: 8, padding: "6px 0", fontSize: 13 }}>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ color: T.ink, fontWeight: 600 }}>{x.name}</div>
+                    {x.scope && <div style={{ color: T.sub, fontSize: 12 }}>{x.scope}</div>}
+                  </div>
+                  <span style={{ fontFamily: font.num, fontWeight: 700, color: T.out, fontVariantNumeric: "tabular-nums" }} title="cost before tax">−{fmt(x.price)}</span>
+                  <button onClick={() => removeSub(j.id, x.id)} style={{ background: "none", border: "none", color: T.sub, fontSize: 16, cursor: "pointer", padding: 2 }} aria-label="Remove">×</button>
+                </div>
+              ))}
+              {(j.subs || []).length === 0 && subOpen !== j.id && (
+                <div style={{ fontSize: 12, color: T.sub, marginTop: 4 }}>No subcontractors logged.</div>
+              )}
+              {(j.subs || []).length > 0 && (
+                <div style={{ fontSize: 12, color: T.sub, marginTop: 2, fontWeight: 700 }}>Subs total (before tax): {fmt(jobSubTotal(j))}</div>
+              )}
+              {subOpen === j.id && (
+                <div style={{ marginTop: 8 }}>
+                  <input style={{ ...inputStyle, marginBottom: 6 }} placeholder="Subcontractor name" value={(subForm[j.id]?.name) || ""} onChange={(e) => setSubForm({ ...subForm, [j.id]: { ...subForm[j.id], name: e.target.value } })} />
+                  <input style={{ ...inputStyle, marginBottom: 6 }} placeholder="Scope (e.g. electrical, plumbing)" value={(subForm[j.id]?.scope) || ""} onChange={(e) => setSubForm({ ...subForm, [j.id]: { ...subForm[j.id], scope: e.target.value } })} />
+                  <div style={{ display: "flex", gap: 6 }}>
+                    <input style={{ ...inputStyle, flex: 1 }} type="number" inputMode="decimal" placeholder="Price before tax $" value={(subForm[j.id]?.price) || ""} onChange={(e) => setSubForm({ ...subForm, [j.id]: { ...subForm[j.id], price: e.target.value } })} />
+                    <Btn small onClick={() => addSub(j.id)}>Add</Btn>
+                  </div>
+                </div>
+              )}
+            </div>
+          </Card>
+        );
+      })}
+
+      {viewPhoto && (
+        <div onClick={() => setViewPhoto(null)}
+          style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,.85)", zIndex: 100, display: "flex", alignItems: "center", justifyContent: "center", padding: 16 }}>
+          <img src={viewPhoto} alt="receipt" style={{ maxWidth: "100%", maxHeight: "85%", borderRadius: 10 }} />
+          <button onClick={() => setViewPhoto(null)} style={{ position: "absolute", top: "calc(16px + env(safe-area-inset-top))", right: 18, background: "rgba(255,255,255,.2)", color: "#fff", border: "none", borderRadius: 999, width: 40, height: 40, fontSize: 22, cursor: "pointer" }}>×</button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ---------- MANAGE (master data: add / edit / delete) ----------
+function Manage({ data, save }) {
+  const [seg, setSeg] = useState("crew");
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+      <div style={{ display: "flex", gap: 6, background: T.inkSoft, padding: 4, borderRadius: 12 }}>
+        {[{ id: "crew", label: "Crew" }, { id: "jobs", label: "Jobs" }].map((v) => (
+          <button key={v.id} onClick={() => setSeg(v.id)}
+            style={{ flex: 1, padding: "9px 0", borderRadius: 9, border: "none", cursor: "pointer",
+              fontFamily: font.display, fontWeight: 700, fontSize: 14,
+              background: seg === v.id ? "#fff" : "transparent", color: seg === v.id ? T.ink : T.sub,
+              boxShadow: seg === v.id ? "0 1px 3px rgba(0,0,0,.12)" : "none" }}>
+            {v.label}
+          </button>
+        ))}
+      </div>
+      {seg === "crew" ? <ManageCrew data={data} save={save} /> : <ManageJobs data={data} save={save} />}
+    </div>
+  );
+}
+
+function ManageCrew({ data, save }) {
+  const [adding, setAdding] = useState(false);
+  const [form, setForm] = useState({ name: "", rate: "", casual: false });
+  const [editId, setEditId] = useState(null);
+  const [edit, setEdit] = useState({ name: "", rate: "", casual: false, active: true });
+  const [confirmDel, setConfirmDel] = useState(null);
+
+  const add = () => {
+    if (!form.name || !form.rate) return;
+    save({ ...data, crew: [...data.crew, { id: uid(), name: form.name.trim(), rate: parseFloat(form.rate), casual: form.casual, active: true, jobId: null }], seeded: false });
+    setForm({ name: "", rate: "", casual: false });
+    setAdding(false);
+  };
+  const startEdit = (c) => { setEditId(c.id); setEdit({ name: c.name, rate: String(c.rate), casual: !!c.casual, active: c.active !== false }); setConfirmDel(null); };
+  const saveEdit = (id) => {
+    if (!edit.name || isNaN(parseFloat(edit.rate))) return;
+    save({ ...data, crew: data.crew.map((c) => (c.id === id ? { ...c, name: edit.name.trim(), rate: parseFloat(edit.rate), casual: edit.casual, active: edit.active } : c)), seeded: false });
+    setEditId(null);
+  };
+  const del = (id) => {
+    if (confirmDel !== id) { setConfirmDel(id); setTimeout(() => setConfirmDel((x) => (x === id ? null : x)), 3500); return; }
+    save({
+      ...data,
+      crew: data.crew.filter((c) => c.id !== id),
+      schedule: (data.schedule || []).filter((s) => s.crewId !== id),
+      timeEntries: data.timeEntries.filter((e) => e.crewId !== id),
+      seeded: false,
+    });
+    setConfirmDel(null); setEditId(null);
+  };
+
+  const sorted = [...data.crew].sort((a, b) => (a.active !== false) === (b.active !== false) ? a.name.localeCompare(b.name) : (a.active !== false ? -1 : 1));
+  const activeN = data.crew.filter((c) => c.active !== false).length;
+
+  const TypePick = ({ casual, set }) => (
+    <div style={{ marginBottom: 10 }}>
+      <div style={{ fontSize: 12, fontWeight: 600, color: T.sub, marginBottom: 4 }}>Employment type</div>
+      <div style={{ display: "flex", gap: 8 }}>
+        {[{ v: false, label: "Permanent" }, { v: true, label: "Casual (as-needed)" }].map((o) => (
+          <button key={String(o.v)} onClick={() => set(o.v)}
+            style={{ flex: 1, padding: "9px 0", borderRadius: 10, cursor: "pointer", fontFamily: font.display, fontWeight: 700, fontSize: 13,
+              border: `1.5px solid ${casual === o.v ? (o.v ? T.hivis : T.ink) : T.line}`,
+              background: casual === o.v ? (o.v ? T.hivis : T.ink) : "#fff",
+              color: casual === o.v ? "#fff" : T.sub }}>
+            {o.label}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+
+  const Toggle = ({ on, set, label }) => (
+    <label style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 14, color: T.ink, marginBottom: 10, cursor: "pointer" }}>
+      <input type="checkbox" checked={on} onChange={(e) => set(e.target.checked)} style={{ width: 18, height: 18 }} />
+      {label}
+    </label>
+  );
+
+  return (
+    <>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <Eyebrow>Crew · {activeN} active / {data.crew.length} total</Eyebrow>
+        <Btn small onClick={() => setAdding(!adding)}>{adding ? "Close" : "+ Add crew"}</Btn>
+      </div>
+
+      {(() => {
+        const flags = data.crew.map((c) => ({ c, ...classifyReview(c, data.timeEntries) })).filter((x) => x.suggestion);
+        if (flags.length === 0) return null;
+        const apply = (id, makeCasual) => save({ ...data, crew: data.crew.map((c) => (c.id === id ? { ...c, casual: makeCasual } : c)), seeded: false });
+        return (
+          <Card style={{ borderLeft: `4px solid ${T.hivis}`, background: T.hivisSoft }}>
+            <Eyebrow color={T.hivis}>Flagged for review · {flags.length}</Eyebrow>
+            <div style={{ fontSize: 12, color: T.sub, margin: "4px 0 8px" }}>Recent hours don't match the set type. Review and apply if you agree.</div>
+            {flags.map(({ c, suggestion, reason }) => (
+              <div key={c.id} style={{ padding: "8px 0", borderTop: `1px solid ${T.line}` }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+                  <span style={{ fontFamily: font.display, fontWeight: 700, fontSize: 15 }}>{c.name}</span>
+                  <span style={{ fontSize: 12, color: T.sub }}>{c.casual ? "Casual" : "Permanent"} → <b style={{ color: T.ink }}>{suggestion === "casual" ? "Casual" : "Permanent"}</b></span>
+                </div>
+                <div style={{ fontSize: 12, color: T.sub, marginTop: 2 }}>{reason}</div>
+                <div style={{ display: "flex", gap: 8, marginTop: 6 }}>
+                  <Btn small onClick={() => apply(c.id, suggestion === "casual")}>Set {suggestion === "casual" ? "casual" : "permanent"}</Btn>
+                </div>
+              </div>
+            ))}
+          </Card>
+        );
+      })()}
+      {adding && (
+        <Card>
+          <Field label="Name"><input style={inputStyle} value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="First name" /></Field>
+          <Field label="Cost rate ($/hr)"><input style={inputStyle} type="number" inputMode="decimal" value={form.rate} onChange={(e) => setForm({ ...form, rate: e.target.value })} placeholder="55" /></Field>
+          <TypePick casual={form.casual} set={(v) => setForm({ ...form, casual: v })} />
+          <Btn onClick={add} style={{ width: "100%" }}>Add to crew</Btn>
+        </Card>
+      )}
+      {sorted.map((c) => editId === c.id ? (
+        <Card key={c.id} style={{ borderLeft: `4px solid ${T.ink}` }}>
+          <Field label="Name"><input style={inputStyle} value={edit.name} onChange={(e) => setEdit({ ...edit, name: e.target.value })} /></Field>
+          <Field label="Cost rate ($/hr)"><input style={inputStyle} type="number" inputMode="decimal" value={edit.rate} onChange={(e) => setEdit({ ...edit, rate: e.target.value })} /></Field>
+          <TypePick casual={edit.casual} set={(v) => setEdit({ ...edit, casual: v })} />
+          <Toggle on={edit.active} set={(v) => setEdit({ ...edit, active: v })} label="Active (currently employed)" />
+          <div style={{ display: "flex", gap: 8 }}>
+            <Btn onClick={() => saveEdit(c.id)} style={{ flex: 1 }}>Save</Btn>
+            <Btn kind="ghost" onClick={() => setEditId(null)}>Cancel</Btn>
+          </div>
+          <button onClick={() => del(c.id)}
+            style={{ width: "100%", marginTop: 10, background: confirmDel === c.id ? T.out : "transparent", color: confirmDel === c.id ? "#fff" : T.out, border: `1.5px solid ${T.out}`, borderRadius: 10, padding: "11px", cursor: "pointer", fontFamily: font.display, fontWeight: 700, fontSize: 14 }}>
+            {confirmDel === c.id ? "Tap again to delete" : "Delete crew member"}
+          </button>
+          {confirmDel === c.id && <div style={{ fontSize: 12, color: T.sub, marginTop: 6 }}>Deleting also removes their logged hours from job costing. To keep history, mark them inactive instead.</div>}
+        </Card>
+      ) : (
+        <Card key={c.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", opacity: c.active === false ? 0.6 : 1, borderLeft: c.active === false ? `4px solid ${T.line}` : "none" }}>
+          <div>
+            <div style={{ fontFamily: font.display, fontWeight: 700, fontSize: 18, display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+              {c.name}
+              {c.casual && <span style={{ background: T.hivisSoft, color: T.hivis, borderRadius: 6, padding: "2px 7px", fontSize: 11, fontWeight: 700 }}>CASUAL</span>}
+              {c.contractor && <span style={{ background: "#E8EEF5", color: T.navy || "#1B2A41", borderRadius: 6, padding: "2px 7px", fontSize: 11, fontWeight: 700 }}>CONTRACTOR</span>}
+              {c.active === false && <span style={{ background: T.inkSoft, color: T.sub, borderRadius: 6, padding: "2px 7px", fontSize: 11, fontWeight: 700 }}>INACTIVE</span>}
+            </div>
+            <div style={{ fontSize: 13, color: T.sub }}>${c.rate}/hr</div>
+          </div>
+          <Btn small kind="ghost" onClick={() => startEdit(c)}>Edit</Btn>
+        </Card>
+      ))}
+    </>
+  );
+}
+
+function ManageJobs({ data, save }) {
+  const [adding, setAdding] = useState(false);
+  const [form, setForm] = useState({ name: "", client: "", revenue: "", address: "", start: "", end: "" });
+  const [editId, setEditId] = useState(null);
+  const [edit, setEdit] = useState({});
+  const [confirmDel, setConfirmDel] = useState(null);
+
+  const add = () => {
+    if (!form.name) return;
+    save({ ...data, jobs: [...data.jobs, { id: uid(), name: form.name.trim(), client: form.client, address: form.address || "", revenue: parseFloat(form.revenue || 0), status: "active", start: form.start || "", end: form.end || "", expenses: [], changes: [] }], seeded: false });
+    setForm({ name: "", client: "", revenue: "", address: "", start: "", end: "" });
+    setAdding(false);
+  };
+  const startEdit = (j) => { setEditId(j.id); setEdit({ name: j.name, client: j.client || "", revenue: String(j.revenue ?? ""), address: j.address || "", start: j.start || "", end: j.end || "", status: j.status }); setConfirmDel(null); };
+  const saveEdit = (id) => {
+    if (!edit.name) return;
+    save({ ...data, jobs: data.jobs.map((j) => (j.id === id ? { ...j, name: edit.name.trim(), client: edit.client, address: edit.address || "", revenue: parseFloat(edit.revenue || 0), start: edit.start || "", end: edit.end || "", status: edit.status } : j)), seeded: false });
+    setEditId(null);
+  };
+  const del = (id) => {
+    if (confirmDel !== id) { setConfirmDel(id); setTimeout(() => setConfirmDel((x) => (x === id ? null : x)), 3500); return; }
+    save({
+      ...data,
+      jobs: data.jobs.filter((j) => j.id !== id),
+      crew: data.crew.map((c) => (c.jobId === id ? { ...c, jobId: null } : c)),
+      schedule: (data.schedule || []).filter((s) => s.jobId !== id),
+      timeEntries: data.timeEntries.filter((e) => e.jobId !== id),
+      seeded: false,
+    });
+    setConfirmDel(null); setEditId(null);
+  };
+
+  const jobForm = (st, setSt) => (
+    <>
+      <Field label="Job name"><input style={inputStyle} value={st.name} onChange={(e) => setSt({ ...st, name: e.target.value })} placeholder="Smith deck rebuild" /></Field>
+      <Field label="Client"><input style={inputStyle} value={st.client} onChange={(e) => setSt({ ...st, client: e.target.value })} /></Field>
+      <Field label="Address (for Google Maps)"><input style={inputStyle} value={st.address || ""} onChange={(e) => setSt({ ...st, address: e.target.value })} placeholder="2335 rue de Bordeaux, Montreal" /></Field>
+      <Field label="Contract / billed amount ($)"><input style={inputStyle} type="number" inputMode="decimal" value={st.revenue} onChange={(e) => setSt({ ...st, revenue: e.target.value })} /></Field>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+        <Field label="Start date"><input style={inputStyle} type="date" value={st.start} onChange={(e) => setSt({ ...st, start: e.target.value })} /></Field>
+        <Field label="Target end date"><input style={inputStyle} type="date" value={st.end} onChange={(e) => setSt({ ...st, end: e.target.value })} /></Field>
+      </div>
+    </>
+  );
+
+  return (
+    <>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <Eyebrow>Jobs · {data.jobs.length}</Eyebrow>
+        <Btn small onClick={() => setAdding(!adding)}>{adding ? "Close" : "+ Add job"}</Btn>
+      </div>
+      {adding && (
+        <Card>
+          {jobForm(form, setForm)}
+          <Btn onClick={add} style={{ width: "100%" }}>Add job</Btn>
+        </Card>
+      )}
+      {data.jobs.map((j) => editId === j.id ? (
+        <Card key={j.id} style={{ borderLeft: `4px solid ${T.ink}` }}>
+          {jobForm(edit, setEdit)}
+          <Field label="Status">
+            <select style={inputStyle} value={edit.status} onChange={(e) => setEdit({ ...edit, status: e.target.value })}>
+              <option value="active">Active</option>
+              <option value="done">Done</option>
+            </select>
+          </Field>
+          <div style={{ display: "flex", gap: 8 }}>
+            <Btn onClick={() => saveEdit(j.id)} style={{ flex: 1 }}>Save</Btn>
+            <Btn kind="ghost" onClick={() => setEditId(null)}>Cancel</Btn>
+          </div>
+          <button onClick={() => del(j.id)}
+            style={{ width: "100%", marginTop: 10, background: confirmDel === j.id ? T.out : "transparent", color: confirmDel === j.id ? "#fff" : T.out, border: `1.5px solid ${T.out}`, borderRadius: 10, padding: "11px", cursor: "pointer", fontFamily: font.display, fontWeight: 700, fontSize: 14 }}>
+            {confirmDel === j.id ? "Tap again to delete" : "Delete job"}
+          </button>
+          {confirmDel === j.id && <div style={{ fontSize: 12, color: T.sub, marginTop: 6 }}>Frees crew and schedule; money records stay but lose the job tag; logged hours removed.</div>}
+        </Card>
+      ) : (
+        <Card key={j.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", opacity: j.status === "done" ? 0.7 : 1 }}>
+          <div style={{ minWidth: 0 }}>
+            <div style={{ fontFamily: font.display, fontWeight: 700, fontSize: 18 }}>{j.name}</div>
+            <div style={{ fontSize: 13, color: T.sub }}>
+              {j.client || "—"}{(j.start || j.end) ? ` · ${fmtRange(j.start, j.end)}` : ""} · {fmt(j.revenue)}
+            </div>
+            {j.address && <div style={{ fontSize: 12, marginTop: 2 }}><MapsLink address={j.address} /></div>}
+          </div>
+          <Btn small kind="ghost" onClick={() => startEdit(j)}>Edit</Btn>
+        </Card>
+      ))}
+    </>
+  );
+}
+
+
+// ---------- TASK TRACKER ----------
+function TaskTracker({ data, save }) {
+  const tasks = data.tasks || [];
+  const [adding, setAdding] = useState(false);
+  const [form, setForm] = useState({ title: "", assignedBy: "", assignedTo: "", notes: "", assignedDate: todayStr(), deadline: "" });
+  const [editId, setEditId] = useState(null);
+  const [edit, setEdit] = useState({});
+  const [confirmDel, setConfirmDel] = useState(null);
+  const [filter, setFilter] = useState("all"); // all | late | 24h | 7d
+
+  const dl = (deadline) => {
+    if (!deadline) return null;
+    return Math.round((new Date(deadline + "T00:00:00") - new Date(todayStr() + "T00:00:00")) / 86400000);
+  };
+
+  const open = tasks.filter((t) => t.status !== "done");
+  const lateN = open.filter((t) => { const d = dl(t.deadline); return d !== null && d < 0; }).length;
+  const dueTodayN = open.filter((t) => dl(t.deadline) === 0).length;
+  const next24N = open.filter((t) => { const d = dl(t.deadline); return d !== null && d >= 0 && d <= 1; }).length;
+  const next7N = open.filter((t) => { const d = dl(t.deadline); return d !== null && d >= 0 && d <= 7; }).length;
+
+  const addTask = () => {
+    if (!form.title) return;
+    save({
+      ...data,
+      tasks: [...tasks, { id: uid(), title: form.title.trim(), assignedBy: form.assignedBy.trim(), assignedTo: form.assignedTo || "", notes: form.notes.trim(), assignedDate: form.assignedDate || todayStr(), deadline: form.deadline || "", status: "open" }],
+      seeded: false,
+    });
+    setForm({ title: "", assignedBy: "", assignedTo: "", notes: "", assignedDate: todayStr(), deadline: "" });
+    setAdding(false);
+  };
+
+  const startEdit = (t) => { setEditId(t.id); setEdit({ title: t.title, assignedBy: t.assignedBy || "", assignedTo: t.assignedTo || "", notes: t.notes || "", assignedDate: t.assignedDate || todayStr(), deadline: t.deadline || "" }); setConfirmDel(null); };
+  const saveEdit = (id) => {
+    if (!edit.title) return;
+    save({ ...data, tasks: tasks.map((t) => (t.id === id ? { ...t, title: edit.title.trim(), assignedBy: edit.assignedBy.trim(), assignedTo: edit.assignedTo, notes: edit.notes.trim(), assignedDate: edit.assignedDate || "", deadline: edit.deadline || "" } : t)), seeded: false });
+    setEditId(null);
+  };
+
+  const toggleDone = (t) =>
+    save({ ...data, tasks: tasks.map((x) => (x.id === t.id ? { ...x, status: x.status === "done" ? "open" : "done" } : x)), seeded: false });
+
+  const del = (id) => {
+    if (confirmDel !== id) { setConfirmDel(id); setTimeout(() => setConfirmDel((x) => (x === id ? null : x)), 3000); return; }
+    save({ ...data, tasks: tasks.filter((t) => t.id !== id), seeded: false });
+    setConfirmDel(null);
+  };
+
+  const matchFilter = (t) => {
+    if (t.status === "done") return filter === "all";
+    const d = dl(t.deadline);
+    if (filter === "late") return d !== null && d < 0;
+    if (filter === "24h") return d !== null && d >= 0 && d <= 1;
+    if (filter === "7d") return d !== null && d >= 0 && d <= 7;
+    return true;
+  };
+  const sorted = [...tasks].filter(matchFilter).sort((a, b) => {
+    if ((a.status === "done") !== (b.status === "done")) return a.status === "done" ? 1 : -1;
+    return (a.deadline || "9999").localeCompare(b.deadline || "9999");
+  });
+
+  const taskForm = (st, setSt) => (
+    <>
+      <Field label="Task"><input style={inputStyle} value={st.title} onChange={(e) => setSt({ ...st, title: e.target.value })} placeholder="Install hallway panels" /></Field>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+        <Field label="Assigned by"><input style={inputStyle} value={st.assignedBy} onChange={(e) => setSt({ ...st, assignedBy: e.target.value })} placeholder="Name" /></Field>
+        <Field label="Assigned to">
+          <select style={inputStyle} value={st.assignedTo} onChange={(e) => setSt({ ...st, assignedTo: e.target.value })}>
+            <option value="">Unassigned</option>
+            {data.crew.filter(isActiveCrew).map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
+          </select>
+        </Field>
+      </div>
+      <Field label="Related info / notes"><textarea style={{ ...inputStyle, minHeight: 64, fontFamily: font.body, resize: "vertical" }} value={st.notes} onChange={(e) => setSt({ ...st, notes: e.target.value })} placeholder="Materials, location, special instructions…" /></Field>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+        <Field label="Assigned date"><input style={inputStyle} type="date" value={st.assignedDate} onChange={(e) => setSt({ ...st, assignedDate: e.target.value })} /></Field>
+        <Field label="Deadline"><input style={inputStyle} type="date" value={st.deadline} onChange={(e) => setSt({ ...st, deadline: e.target.value })} /></Field>
+      </div>
+    </>
+  );
+
+  const Metric = ({ label, n, color, id }) => (
+    <button onClick={() => setFilter(filter === id ? "all" : id)}
+      style={{ flex: 1, background: filter === id ? color : "#fff", border: `1.5px solid ${color}`, borderRadius: 12, padding: "10px 6px", cursor: "pointer", textAlign: "center" }}>
+      <div style={{ fontFamily: font.num, fontWeight: 800, fontSize: 24, color: filter === id ? "#fff" : color, lineHeight: 1 }}>{n}</div>
+      <div style={{ fontFamily: font.display, fontWeight: 700, fontSize: 10, letterSpacing: "0.04em", textTransform: "uppercase", color: filter === id ? "#fff" : T.sub, marginTop: 3 }}>{label}</div>
+    </button>
+  );
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <Eyebrow>Task Tracker · {open.length} open</Eyebrow>
+        <Btn small onClick={() => { setAdding(!adding); setEditId(null); }}>{adding ? "Close" : "+ Add task"}</Btn>
+      </div>
+
+      {/* Report: due / late / upcoming */}
+      <div style={{ display: "flex", gap: 8 }}>
+        <Metric label="Late" n={lateN} color={T.out} id="late" />
+        <Metric label="Due today" n={dueTodayN} color={T.hivis} id="today" />
+        <Metric label="≤ 24h" n={next24N} color={T.hivis} id="24h" />
+        <Metric label="≤ 7 days" n={next7N} color={T.in} id="7d" />
+      </div>
+      {filter !== "all" && (
+        <button onClick={() => setFilter("all")} style={{ alignSelf: "flex-start", background: "none", border: "none", color: T.sub, fontFamily: font.display, fontWeight: 700, fontSize: 12, cursor: "pointer" }}>
+          ✕ Clear filter — showing {filter === "late" ? "late" : filter === "24h" ? "next 24h" : filter === "7d" ? "next 7 days" : "due today"}
+        </button>
+      )}
+
+      {adding && <Card>{taskForm(form, setForm)}<Btn onClick={addTask} style={{ width: "100%" }}>Add task</Btn></Card>}
+
+      {sorted.length === 0 && <Card><div style={{ fontSize: 14, color: T.sub, textAlign: "center", padding: 12 }}>No tasks here.</div></Card>}
+
+      {sorted.map((t) => {
+        if (editId === t.id) {
+          return (
+            <Card key={t.id} style={{ borderLeft: `4px solid ${T.ink}` }}>
+              {taskForm(edit, setEdit)}
+              <div style={{ display: "flex", gap: 8 }}>
+                <Btn onClick={() => saveEdit(t.id)} style={{ flex: 1 }}>Save</Btn>
+                <Btn kind="ghost" onClick={() => setEditId(null)}>Cancel</Btn>
+              </div>
+              <button onClick={() => del(t.id)} style={{ width: "100%", marginTop: 10, background: confirmDel === t.id ? T.out : "transparent", color: confirmDel === t.id ? "#fff" : T.out, border: `1.5px solid ${T.out}`, borderRadius: 10, padding: "11px", cursor: "pointer", fontFamily: font.display, fontWeight: 700, fontSize: 14 }}>
+                {confirmDel === t.id ? "Tap again to delete" : "Delete task"}
+              </button>
+            </Card>
+          );
+        }
+        const who = data.crew.find((c) => c.id === t.assignedTo);
+        const d = dl(t.deadline);
+        const done = t.status === "done";
+        const edge = done ? T.line : d !== null && d < 0 ? T.out : d !== null && d <= 1 ? T.hivis : T.in;
+        return (
+          <Card key={t.id} style={{ borderLeft: `4px solid ${edge}`, opacity: done ? 0.6 : 1 }}>
+            <div style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
+              <button onClick={() => toggleDone(t)} aria-label="Toggle done"
+                style={{ flex: "0 0 auto", width: 24, height: 24, borderRadius: 7, cursor: "pointer", marginTop: 2,
+                  border: `2px solid ${done ? T.in : T.line}`, background: done ? T.in : "#fff", color: "#fff", fontSize: 15, lineHeight: 1, fontWeight: 800 }}>
+                {done ? "✓" : ""}
+              </button>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ fontFamily: font.display, fontWeight: 700, fontSize: 16, textDecoration: done ? "line-through" : "none" }}>{t.title}</div>
+                <div style={{ fontSize: 12, color: T.sub, marginTop: 2 }}>
+                  {who ? who.name : "Unassigned"}{t.assignedBy ? ` · by ${t.assignedBy}` : ""}
+                </div>
+                {t.notes && <div style={{ fontSize: 13, color: T.ink, marginTop: 6, whiteSpace: "pre-wrap" }}>{t.notes}</div>}
+                <div style={{ display: "flex", gap: 10, flexWrap: "wrap", fontSize: 12, marginTop: 6 }}>
+                  {t.assignedDate && <span style={{ color: T.sub }}>Assigned {shortDate(t.assignedDate)}</span>}
+                  {t.deadline && (
+                    <span style={{ fontWeight: 700, color: done ? T.sub : d < 0 ? T.out : d <= 2 ? T.hivis : T.in }}>
+                      {done ? `due ${shortDate(t.deadline)}` : d < 0 ? `${-d}d late · ${shortDate(t.deadline)}` : d === 0 ? "due today" : `due in ${d}d · ${shortDate(t.deadline)}`}
+                    </span>
+                  )}
+                </div>
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 6, alignItems: "flex-end" }}>
+                <button onClick={() => startEdit(t)} style={{ background: T.inkSoft, border: "none", color: T.ink, borderRadius: 8, padding: "5px 10px", cursor: "pointer", fontFamily: font.display, fontWeight: 700, fontSize: 12 }}>Edit</button>
+                <button onClick={() => del(t.id)} style={{ background: confirmDel === t.id ? T.out : "none", color: confirmDel === t.id ? "#fff" : T.sub, border: "none", borderRadius: 8, fontSize: confirmDel === t.id ? 11 : 18, cursor: "pointer", padding: confirmDel === t.id ? "5px 8px" : "0 4px", fontFamily: font.display, fontWeight: 700 }}>
+                  {confirmDel === t.id ? "Sure?" : "×"}
+                </button>
+              </div>
+            </div>
+          </Card>
+        );
+      })}
+    </div>
+  );
+}
+
+// ---------- HOURS REPORT (by crew, by week) ----------
+const weekStartOf = (ds) => {
+  const d = new Date(ds + "T00:00:00");
+  d.setDate(d.getDate() - d.getDay()); // back up to Sunday
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+};
+
+function HoursReport({ data }) {
+  const [view, setView] = useState("week"); // "week" | "trend"
+  const [empId, setEmpId] = useState(null);  // selected employee drill-down
+  const [trendWin, setTrendWin] = useState(4); // 4 or 13 weeks
+  const [wkStart, setWkStart] = useState(weekStartOf(todayStr()));
+  const [mode, setMode] = useState("crew");
+  const end = addDays(wkStart, 6);
+
+  const hoursInRange = (s, e) => (data.timeEntries || []).filter((x) => x.date >= s && x.date <= e).reduce((a, x) => a + x.hours, 0);
+  const rateById = (id) => { const c = data.crew.find((x) => x.id === id); return c ? c.rate || 0 : 0; };
+  const costInRange = (s, e) => (data.timeEntries || []).filter((x) => x.date >= s && x.date <= e).reduce((a, x) => a + x.hours * rateById(x.crewId), 0);
+  const thisWeekStart = weekStartOf(todayStr());
+  // Build trailing weekly totals (oldest -> newest), newest = current week
+  const buildWeeks = (n) => Array.from({ length: n }, (_, i) => {
+    const ws = addDays(thisWeekStart, -(n - 1 - i) * 7);
+    return { start: ws, total: hoursInRange(ws, addDays(ws, 6)), cost: costInRange(ws, addDays(ws, 6)) };
+  });
+  const trendWeeks = buildWeeks(trendWin);
+  const wk = (k) => hoursInRange(addDays(thisWeekStart, -k * 7), addDays(thisWeekStart, -k * 7 + 6));
+  const lastWeekTotal = wk(1); // the completed week before this one
+  const avg4 = [1, 2, 3, 4].reduce((a, k) => a + wk(k), 0) / 4;
+  const avg13 = Array.from({ length: 13 }, (_, i) => wk(i + 1)).reduce((a, b) => a + b, 0) / 13;
+
+  const inWeek = (data.timeEntries || []).filter((e) => e.date >= wkStart && e.date <= end);
+  const totalH = inWeek.reduce((s, e) => s + e.hours, 0);
+  const totalCost = inWeek.reduce((s, e) => {
+    const c = data.crew.find((x) => x.id === e.crewId);
+    return s + e.hours * (c ? c.rate || 0 : 0);
+  }, 0);
+
+  const byCrew = (data.crew || []).map((c) => {
+    const es = inWeek.filter((e) => e.crewId === c.id);
+    const hours = es.reduce((s, e) => s + e.hours, 0);
+    return { id: c.id, name: c.name + (c.active === false ? " (inactive)" : "") + (c.casual ? " (casual)" : ""), hours, days: new Set(es.map((e) => e.date)).size, cost: hours * (c.rate || 0), core: isCoreCrew(c) };
+  });
+  const workedCrew = byCrew.filter((x) => x.hours > 0).sort(byName);
+  const idleCrew = byCrew.filter((x) => x.hours === 0 && x.core);
+
+  const byJob = (data.jobs || []).map((j) => {
+    const es = inWeek.filter((e) => e.jobId === j.id);
+    return { id: j.id, name: j.name, hours: es.reduce((s, e) => s + e.hours, 0) };
+  }).filter((x) => x.hours > 0).sort(byName);
+
+  const rows = mode === "crew" ? workedCrew : byJob;
+  const maxH = Math.max(1, ...rows.map((r) => r.hours));
+  const isThisWeek = wkStart === weekStartOf(todayStr());
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+      {empId && <EmployeeDetail data={data} crewId={empId} setCrewId={setEmpId} onBack={() => setEmpId(null)} />}
+      {!empId && (<>
+      {/* View toggle */}
+      <div style={{ display: "flex", gap: 6, background: T.inkSoft, padding: 4, borderRadius: 12 }}>
+        {[{ id: "week", label: "Weekly breakdown" }, { id: "trend", label: "Trend" }].map((v) => (
+          <button key={v.id} onClick={() => setView(v.id)}
+            style={{ flex: 1, padding: "9px 0", borderRadius: 9, border: "none", cursor: "pointer", fontFamily: font.display, fontWeight: 700, fontSize: 14,
+              background: view === v.id ? "#fff" : "transparent", color: view === v.id ? T.ink : T.sub, boxShadow: view === v.id ? "0 1px 3px rgba(0,0,0,.12)" : "none" }}>
+            {v.label}
+          </button>
+        ))}
+      </div>
+
+      {view === "trend" && (() => {
+        const maxH = Math.max(1, ...trendWeeks.map((w) => w.total));
+        const lwVs4 = avg4 > 0 ? Math.round(((lastWeekTotal - avg4) / avg4) * 100) : 0;
+        const lwVs13 = avg13 > 0 ? Math.round(((lastWeekTotal - avg13) / avg13) * 100) : 0;
+        return (
+          <>
+            {/* Window toggle */}
+            <div style={{ display: "flex", gap: 8 }}>
+              {[4, 13].map((n) => (
+                <button key={n} onClick={() => setTrendWin(n)}
+                  style={{ flex: 1, padding: "8px 0", borderRadius: 10, cursor: "pointer", fontFamily: font.display, fontWeight: 700, fontSize: 13,
+                    border: `1.5px solid ${trendWin === n ? T.ink : T.line}`, background: trendWin === n ? T.ink : "#fff", color: trendWin === n ? "#fff" : T.sub }}>
+                  Last {n} weeks
+                </button>
+              ))}
+            </div>
+
+            {/* Comparison */}
+            <div style={{ display: "flex", gap: 8 }}>
+              <Card style={{ flex: 1, textAlign: "center" }}>
+                <Eyebrow>Last week</Eyebrow>
+                <div style={{ fontFamily: font.num, fontWeight: 800, fontSize: 24 }}>{Math.round(lastWeekTotal)}h</div>
+              </Card>
+              <Card style={{ flex: 1, textAlign: "center" }}>
+                <Eyebrow>4-wk avg</Eyebrow>
+                <div style={{ fontFamily: font.num, fontWeight: 800, fontSize: 24 }}>{Math.round(avg4)}h</div>
+                <div style={{ fontSize: 11, fontWeight: 700, color: lwVs4 >= 0 ? T.in : T.out }}>{lwVs4 >= 0 ? "▲" : "▼"} {Math.abs(lwVs4)}%</div>
+              </Card>
+              <Card style={{ flex: 1, textAlign: "center" }}>
+                <Eyebrow>13-wk avg</Eyebrow>
+                <div style={{ fontFamily: font.num, fontWeight: 800, fontSize: 24 }}>{Math.round(avg13)}h</div>
+                <div style={{ fontSize: 11, fontWeight: 700, color: lwVs13 >= 0 ? T.in : T.out }}>{lwVs13 >= 0 ? "▲" : "▼"} {Math.abs(lwVs13)}%</div>
+              </Card>
+            </div>
+
+            {/* Weekly bar chart */}
+            <Card>
+              <Eyebrow>Total hours per week</Eyebrow>
+              <div style={{ display: "flex", alignItems: "flex-end", gap: trendWin > 8 ? 3 : 6, height: 150, marginTop: 12 }}>
+                {trendWeeks.map((w, i) => {
+                  const isCurrent = w.start === thisWeekStart;
+                  const h = Math.round((w.total / maxH) * 110);
+                  return (
+                    <button key={w.start} onClick={() => { setWkStart(w.start); setView("week"); }}
+                      style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-end", gap: 2, background: "none", border: "none", cursor: "pointer", height: "100%" }}>
+                      {w.total > 0 && (
+                        <>
+                          <span style={{ fontFamily: font.num, fontWeight: 800, fontSize: trendWin > 8 ? 8 : 10, color: T.ink, lineHeight: 1 }}>{Math.round(w.total)}h</span>
+                          <span style={{ fontFamily: font.num, fontWeight: 700, fontSize: trendWin > 8 ? 7 : 9, color: T.out, lineHeight: 1 }}>{fmt(w.cost)}</span>
+                        </>
+                      )}
+                      <div style={{ width: "100%", maxWidth: 30, height: Math.max(2, h), background: isCurrent ? T.hivis : T.in, borderRadius: 4, marginTop: 2 }} />
+                      <span style={{ fontSize: 9, color: T.sub, fontFamily: font.num }}>{Number(w.start.slice(8, 10))}/{Number(w.start.slice(5, 7))}</span>
+                    </button>
+                  );
+                })}
+              </div>
+              <div style={{ fontSize: 11, color: T.sub, marginTop: 8 }}>
+                Each bar = one week (Sun–Sat), labeled by start date. Orange = current week (in progress). Tap a bar to open that week's breakdown.
+              </div>
+            </Card>
+          </>
+        );
+      })()}
+
+      {view === "week" && (<>
+      {/* Week selector */}
+      <Card style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <Btn small kind="ghost" onClick={() => setWkStart(addDays(wkStart, -7))}>‹</Btn>
+        <div style={{ textAlign: "center" }}>
+          <div style={{ fontFamily: font.display, fontWeight: 800, fontSize: 16 }}>
+            {shortDate(wkStart)} – {shortDate(end)}
+          </div>
+          <div style={{ fontSize: 12, color: isThisWeek ? T.hivis : T.sub, fontWeight: 600 }}>{isThisWeek ? "THIS WEEK" : "week"}</div>
+        </div>
+        <Btn small kind="ghost" onClick={() => setWkStart(addDays(wkStart, 7))}>›</Btn>
+      </Card>
+
+      <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+        <input style={{ ...inputStyle, flex: 1 }} type="date" value={wkStart} onChange={(e) => e.target.value && setWkStart(weekStartOf(e.target.value))} />
+        {!isThisWeek && <Btn small onClick={() => setWkStart(weekStartOf(todayStr()))}>This week</Btn>}
+      </div>
+
+      {/* Totals */}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+        <Card>
+          <Eyebrow>Total hours</Eyebrow>
+          <div style={{ fontFamily: font.num, fontWeight: 800, fontSize: 30 }}>{totalH.toLocaleString()}</div>
+          <div style={{ fontSize: 12, color: T.sub }}>{inWeek.length} entries · {workedCrew.length} crew</div>
+        </Card>
+        <Card>
+          <Eyebrow>Labor cost</Eyebrow>
+          <div style={{ fontFamily: font.num, fontWeight: 800, fontSize: 30 }}>{fmt(totalCost)}</div>
+          <div style={{ fontSize: 12, color: totalCost === 0 ? T.hivis : T.sub }}>{totalCost === 0 ? "set rates in Manage" : "at current rates"}</div>
+        </Card>
+      </div>
+
+      {/* Toggle */}
+      <div style={{ display: "flex", gap: 6, background: T.inkSoft, padding: 4, borderRadius: 12 }}>
+        {[{ id: "crew", label: "By crew member" }, { id: "job", label: "By job" }].map((v) => (
+          <button key={v.id} onClick={() => setMode(v.id)}
+            style={{ flex: 1, padding: "9px 0", borderRadius: 9, border: "none", cursor: "pointer", fontFamily: font.display, fontWeight: 700, fontSize: 14,
+              background: mode === v.id ? "#fff" : "transparent", color: mode === v.id ? T.ink : T.sub, boxShadow: mode === v.id ? "0 1px 3px rgba(0,0,0,.12)" : "none" }}>
+            {v.label}
+          </button>
+        ))}
+      </div>
+
+      <Card>
+        {rows.length === 0 ? (
+          <div style={{ fontSize: 14, color: T.sub, textAlign: "center", padding: 12 }}>No hours logged this week.</div>
+        ) : (
+          rows.map((r) => (
+            <div key={r.id} onClick={mode === "crew" ? () => setEmpId(r.id) : undefined}
+              style={{ padding: "9px 0", borderBottom: `1px solid ${T.line}`, cursor: mode === "crew" ? "pointer" : "default" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 5 }}>
+                <span style={{ fontFamily: font.display, fontWeight: 700, fontSize: 15 }}>{r.name}{mode === "crew" ? <span style={{ color: T.sub, fontWeight: 400 }}> ›</span> : null}</span>
+                <span style={{ fontFamily: font.num, fontWeight: 800, fontSize: 16, fontVariantNumeric: "tabular-nums" }}>
+                  {r.hours}h{mode === "crew" && r.cost > 0 ? <span style={{ color: T.sub, fontWeight: 600, fontSize: 13 }}> · {fmt(r.cost)}</span> : null}
+                </span>
+              </div>
+              <div style={{ height: 8, background: T.inkSoft, borderRadius: 5, overflow: "hidden" }}>
+                <div style={{ width: `${(r.hours / maxH) * 100}%`, height: "100%", background: mode === "crew" ? T.in : T.hivis, borderRadius: 5 }} />
+              </div>
+              {mode === "crew" && <div style={{ fontSize: 11, color: T.sub, marginTop: 3 }}>{r.days} day{r.days !== 1 ? "s" : ""} worked · tap for detail</div>}
+            </div>
+          ))
+        )}
+      </Card>
+
+      {mode === "crew" && idleCrew.length > 0 && (
+        <Card style={{ borderLeft: `4px solid ${T.hivis}` }}>
+          <Eyebrow color={T.hivis}>No hours this week · {idleCrew.length}</Eyebrow>
+          <div style={{ fontSize: 13, color: T.ink, marginTop: 6 }}>{idleCrew.map((c) => c.name).join(", ")}</div>
+        </Card>
+      )}
+      </>)}
+      </>)}
+    </div>
+  );
+}
+
+// ---------- CALENDAR (month view + one-way push to Google/Apple) ----------
+function CalendarView({ data }) {
+  const [monthAnchor, setMonthAnchor] = useState(todayStr().slice(0, 7) + "-01");
+  const [sel, setSel] = useState(todayStr());
+  const schedule = data.schedule || [];
+  const tasks = data.tasks || [];
+
+  const shiftMonth = (n) => {
+    const d = new Date(monthAnchor + "T00:00:00");
+    d.setMonth(d.getMonth() + n);
+    setMonthAnchor(`${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-01`);
+  };
+
+  // Items for a given day
+  const itemsOn = (ds) => {
+    const bookings = schedule.filter((s) => s.date === ds).map((s) => ({
+      kind: "booking", crew: data.crew.find((c) => c.id === s.crewId), job: data.jobs.find((j) => j.id === s.jobId),
+    })).filter((x) => x.crew && x.job);
+    const jobsStart = data.jobs.filter((j) => j.start === ds);
+    const jobsEnd = data.jobs.filter((j) => j.end === ds);
+    const due = tasks.filter((t) => t.deadline === ds && t.status !== "done");
+    return { bookings, jobsStart, jobsEnd, due };
+  };
+
+  const first = new Date(monthAnchor + "T00:00:00");
+  const y = first.getFullYear(), mo = first.getMonth();
+  const startDow = first.getDay();
+  const daysInMonth = new Date(y, mo + 1, 0).getDate();
+  const cells = [];
+  for (let i = 0; i < startDow; i++) cells.push(null);
+  for (let d = 1; d <= daysInMonth; d++) cells.push(`${y}-${String(mo + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`);
+  const monthLabel = first.toLocaleDateString("en-US", { month: "long", year: "numeric" });
+
+  const it = itemsOn(sel);
+  const btnLink = { textDecoration: "none", fontFamily: font.display, fontWeight: 700, fontSize: 12, padding: "5px 9px", borderRadius: 8, border: `1.5px solid ${T.line}`, color: T.ink, background: "#fff", whiteSpace: "nowrap" };
+
+  const AddBtns = ({ title, day, endDay, details, location }) => {
+    const endX = addDays(endDay || day, 1);
+    const safe = title.replace(/[^\w]+/g, "_").slice(0, 40);
+    return (
+      <div style={{ display: "flex", gap: 6, marginTop: 5 }}>
+        <a href={gcalUrl(title, day, endX, details, location)} target="_blank" rel="noreferrer" style={{ ...btnLink, color: T.hivis, borderColor: T.hivis }}>+ Google</a>
+        <a href={icsHref(title, day, endX, details, location)} download={safe + ".ics"} style={btnLink}>+ Apple (.ics)</a>
+      </div>
+    );
+  };
+
+  const dotRow = (ds) => {
+    const x = itemsOn(ds);
+    const dots = [];
+    if (x.bookings.length) dots.push(T.in);
+    if (x.jobsStart.length || x.jobsEnd.length) dots.push(T.ink);
+    if (x.due.length) dots.push(T.hivis);
+    return dots;
+  };
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+      <Card style={{ background: T.hivisSoft, border: `1px solid ${T.hivis}` }}>
+        <div style={{ fontSize: 13, color: T.ink, lineHeight: 1.45 }}>
+          This calendar shows your crew bookings, job dates, and task deadlines. Tap any item to push it into <b>Google</b> or <b>Apple Calendar</b>. This is a one-way add — full live two-way sync needs the connected backend build.
+        </div>
+      </Card>
+
+      <Card style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <Btn small kind="ghost" onClick={() => shiftMonth(-1)}>‹</Btn>
+        <div style={{ fontFamily: font.display, fontWeight: 800, fontSize: 17 }}>{monthLabel}</div>
+        <Btn small kind="ghost" onClick={() => shiftMonth(1)}>›</Btn>
+      </Card>
+
+      <Card>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(7,1fr)", gap: 4, marginBottom: 6 }}>
+          {["S", "M", "T", "W", "T", "F", "S"].map((d, i) => (
+            <div key={i} style={{ textAlign: "center", fontFamily: font.display, fontWeight: 700, fontSize: 11, color: T.sub }}>{d}</div>
+          ))}
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(7,1fr)", gap: 4 }}>
+          {cells.map((ds, i) => {
+            if (!ds) return <div key={i} />;
+            const isToday = ds === todayStr();
+            const isSel = ds === sel;
+            const dots = dotRow(ds);
+            return (
+              <button key={i} onClick={() => setSel(ds)}
+                style={{ aspectRatio: "1 / 1.15", padding: 2, borderRadius: 9, cursor: "pointer",
+                  border: `1.5px solid ${isSel ? T.hivis : isToday ? T.ink : T.line}`, background: isSel ? T.hivisSoft : "#fff",
+                  display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 3 }}>
+                <div style={{ fontFamily: font.display, fontWeight: 700, fontSize: 13, color: T.ink }}>{Number(ds.slice(8, 10))}</div>
+                <div style={{ display: "flex", gap: 2, height: 6 }}>
+                  {dots.map((c, k) => <span key={k} style={{ width: 5, height: 5, borderRadius: 999, background: c }} />)}
+                </div>
+              </button>
+            );
+          })}
+        </div>
+        <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 10, fontSize: 11, color: T.sub }}>
+          <span><span style={{ display: "inline-block", width: 7, height: 7, borderRadius: 999, background: T.in, marginRight: 4 }} />bookings</span>
+          <span><span style={{ display: "inline-block", width: 7, height: 7, borderRadius: 999, background: T.ink, marginRight: 4 }} />job dates</span>
+          <span><span style={{ display: "inline-block", width: 7, height: 7, borderRadius: 999, background: T.hivis, marginRight: 4 }} />task due</span>
+        </div>
+      </Card>
+
+      <Eyebrow>{new Date(sel + "T00:00:00").toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })}</Eyebrow>
+
+      {it.bookings.length === 0 && it.jobsStart.length === 0 && it.jobsEnd.length === 0 && it.due.length === 0 && (
+        <Card><div style={{ fontSize: 14, color: T.sub, textAlign: "center", padding: 12 }}>Nothing scheduled this day.</div></Card>
+      )}
+
+      {it.bookings.map((b, i) => (
+        <Card key={"b" + i} style={{ borderLeft: `4px solid ${T.in}` }}>
+          <div style={{ fontFamily: font.display, fontWeight: 700, fontSize: 16 }}>{b.crew.name} @ {b.job.name}</div>
+          {b.job.address && <div style={{ fontSize: 12, color: T.sub }}>{b.job.address}</div>}
+          <AddBtns title={`${b.crew.name} @ ${b.job.name}`} day={sel} details={`Crew booking — ${b.job.name}`} location={b.job.address || ""} />
+        </Card>
+      ))}
+
+      {it.jobsStart.map((j) => (
+        <Card key={"s" + j.id} style={{ borderLeft: `4px solid ${T.ink}` }}>
+          <div style={{ fontFamily: font.display, fontWeight: 700, fontSize: 16 }}>{j.name} — starts</div>
+          {j.address && <div style={{ fontSize: 12, color: T.sub }}>{j.address}</div>}
+          <AddBtns title={`${j.name} — start`} day={sel} details={`Job start: ${j.name}`} location={j.address || ""} />
+        </Card>
+      ))}
+
+      {it.jobsEnd.map((j) => (
+        <Card key={"e" + j.id} style={{ borderLeft: `4px solid ${T.ink}` }}>
+          <div style={{ fontFamily: font.display, fontWeight: 700, fontSize: 16 }}>{j.name} — target end</div>
+          {j.address && <div style={{ fontSize: 12, color: T.sub }}>{j.address}</div>}
+          <AddBtns title={`${j.name} — target end`} day={sel} details={`Target completion: ${j.name}`} location={j.address || ""} />
+        </Card>
+      ))}
+
+      {it.due.map((t) => {
+        const who = data.crew.find((c) => c.id === t.assignedTo);
+        return (
+          <Card key={"t" + t.id} style={{ borderLeft: `4px solid ${T.hivis}` }}>
+            <div style={{ fontFamily: font.display, fontWeight: 700, fontSize: 16 }}>Task due: {t.title}</div>
+            <div style={{ fontSize: 12, color: T.sub }}>{who ? who.name : "Unassigned"}{t.notes ? ` · ${t.notes}` : ""}</div>
+            <AddBtns title={`Task due: ${t.title}`} day={sel} details={(who ? who.name + " — " : "") + (t.notes || "")} />
+          </Card>
+        );
+      })}
+    </div>
+  );
+}
+
+// ---------- CREW: per-person booking / where they're working ----------
+function CrewBookings({ data }) {
+  const roster = data.crew.filter(isActiveCrew).sort((a, b) => (a.casual === b.casual ? a.name.localeCompare(b.name) : a.casual ? 1 : -1));
+  const [selId, setSelId] = useState(roster[0] ? roster[0].id : null);
+  const sel = data.crew.find((c) => c.id === selId) || roster[0];
+  const jobName = (id) => { const j = data.jobs.find((x) => x.id === id); return j ? j.name : "—"; };
+
+  if (!sel) return <Card><div style={{ fontSize: 14, color: T.sub, textAlign: "center", padding: 12 }}>No active crew.</div></Card>;
+
+  const entries = (data.timeEntries || []).filter((e) => e.crewId === sel.id).sort((a, b) => b.date.localeCompare(a.date));
+  const totalH = entries.reduce((s, e) => s + e.hours, 0);
+  const wkStart = weekStartOf(todayStr()), wkEnd = addDays(wkStart, 6);
+  const weekH = entries.filter((e) => e.date >= wkStart && e.date <= wkEnd).reduce((s, e) => s + e.hours, 0);
+
+  const byJobMap = {};
+  entries.forEach((e) => { byJobMap[e.jobId] = (byJobMap[e.jobId] || 0) + e.hours; });
+  const byJob = Object.entries(byJobMap).map(([jid, h]) => ({ jid, h })).sort((a, b) => ((data.jobs.find((j) => j.id === a.jid) || {}).name || "").localeCompare((data.jobs.find((j) => j.id === b.jid) || {}).name || ""));
+
+  const bookings = (data.schedule || []).filter((s) => s.crewId === sel.id).sort((a, b) => a.date.localeCompare(b.date));
+  const upcoming = bookings.filter((b) => b.date >= todayStr());
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+      <Eyebrow>Pick a crew member</Eyebrow>
+      <div style={{ display: "flex", gap: 8, overflowX: "auto", paddingBottom: 4 }}>
+        {roster.map((c) => (
+          <button key={c.id} onClick={() => setSelId(c.id)}
+            style={{ flex: "0 0 auto", padding: "8px 14px", borderRadius: 999, cursor: "pointer", fontFamily: font.display, fontWeight: 700, fontSize: 14,
+              border: `1.5px solid ${selId === c.id ? T.ink : T.line}`, background: selId === c.id ? T.ink : "#fff", color: selId === c.id ? "#fff" : T.ink, whiteSpace: "nowrap" }}>
+            {c.name}{c.casual ? " ·c" : ""}
+          </button>
+        ))}
+      </div>
+
+      <Card>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+          <div>
+            <div style={{ fontFamily: font.display, fontWeight: 800, fontSize: 22 }}>{sel.name}</div>
+            <div style={{ fontSize: 13, color: T.sub, marginTop: 2 }}>
+              ${sel.rate}/hr · {sel.casual ? "Casual (as-needed)" : "Permanent"}
+            </div>
+          </div>
+          <div style={{ textAlign: "right" }}>
+            <div style={{ fontFamily: font.num, fontWeight: 800, fontSize: 22 }}>{Math.round(totalH * 10) / 10}h</div>
+            <div style={{ fontSize: 11, color: T.sub }}>total · {Math.round(weekH * 10) / 10}h this wk</div>
+          </div>
+        </div>
+        <div style={{ marginTop: 10, padding: "8px 12px", background: T.inkSoft, borderRadius: 10, fontSize: 13 }}>
+          <span style={{ color: T.sub }}>Current assignment: </span>
+          <span style={{ fontWeight: 700, color: T.ink }}>{sel.jobId ? jobName(sel.jobId) : "Unassigned"}</span>
+        </div>
+      </Card>
+
+      {upcoming.length > 0 && (
+        <Card style={{ borderLeft: `4px solid ${T.in}` }}>
+          <Eyebrow color={T.in}>Upcoming bookings · {upcoming.length}</Eyebrow>
+          {upcoming.map((b, i) => (
+            <div key={i} style={{ display: "flex", justifyContent: "space-between", padding: "7px 0", borderBottom: i < upcoming.length - 1 ? `1px solid ${T.line}` : "none" }}>
+              <span style={{ fontWeight: 700, fontSize: 14 }}>{jobName(b.jobId)}</span>
+              <span style={{ fontFamily: font.num, color: T.sub, fontSize: 13 }}>{shortDate(b.date)}</span>
+            </div>
+          ))}
+        </Card>
+      )}
+
+      <Card>
+        <Eyebrow>Where they've worked (by job)</Eyebrow>
+        {byJob.length === 0 ? (
+          <div style={{ fontSize: 14, color: T.sub, padding: 8 }}>No hours logged.</div>
+        ) : byJob.map(({ jid, h }) => {
+          const max = byJob[0].h || 1;
+          return (
+            <div key={jid} style={{ padding: "8px 0", borderBottom: `1px solid ${T.line}` }}>
+              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
+                <span style={{ fontWeight: 700, fontSize: 14 }}>{jobName(jid)}</span>
+                <span style={{ fontFamily: font.num, fontWeight: 700, fontSize: 14 }}>{Math.round(h * 10) / 10}h</span>
+              </div>
+              <div style={{ height: 7, background: T.inkSoft, borderRadius: 4, overflow: "hidden" }}>
+                <div style={{ width: `${(h / max) * 100}%`, height: "100%", background: T.hivis, borderRadius: 4 }} />
+              </div>
+            </div>
+          );
+        })}
+      </Card>
+
+      <Card>
+        <Eyebrow>Recent days</Eyebrow>
+        {entries.length === 0 ? (
+          <div style={{ fontSize: 14, color: T.sub, padding: 8 }}>No recorded days.</div>
+        ) : entries.slice(0, 20).map((e, i) => (
+          <div key={e.id || i} style={{ display: "flex", justifyContent: "space-between", padding: "7px 0", borderBottom: i < Math.min(entries.length, 20) - 1 ? `1px solid ${T.line}` : "none" }}>
+            <span style={{ fontFamily: font.num, color: T.sub, fontSize: 13, minWidth: 70 }}>{shortDate(e.date)}</span>
+            <span style={{ fontWeight: 600, fontSize: 14, flex: 1, textAlign: "center" }}>{jobName(e.jobId)}</span>
+            <span style={{ fontFamily: font.num, fontWeight: 700, fontSize: 14, minWidth: 44, textAlign: "right" }}>{e.hours}h</span>
+          </div>
+        ))}
+        {entries.length > 20 && <div style={{ fontSize: 12, color: T.sub, marginTop: 8 }}>+ {entries.length - 20} earlier days</div>}
+      </Card>
+    </div>
+  );
+}
+
+// ---------- EMPLOYEE DETAIL (opened from Hours) ----------
+function EmployeeDetail({ data, crewId, setCrewId, onBack }) {
+  const roster = (data.crew || []).filter(isActiveCrew).sort((a, b) => (a.casual === b.casual ? a.name.localeCompare(b.name) : a.casual ? 1 : -1));
+  const sel = data.crew.find((c) => c.id === crewId) || roster[0];
+  const jobName = (id) => { const j = data.jobs.find((x) => x.id === id); return j ? j.name : "—"; };
+  if (!sel) return <Card><div style={{ fontSize: 14, color: T.sub, textAlign: "center", padding: 12 }}>No crew.</div></Card>;
+
+  const rate = sel.rate || 0;
+  const all = (data.timeEntries || []).filter((e) => e.crewId === sel.id).sort((a, b) => b.date.localeCompare(a.date));
+  const sum = (arr) => arr.reduce((s, e) => s + e.hours, 0);
+  const wkStart = weekStartOf(todayStr()), wkEnd = addDays(wkStart, 6);
+  const month = todayStr().slice(0, 7);
+  const weekH = sum(all.filter((e) => e.date >= wkStart && e.date <= wkEnd));
+  const lastWkStart = addDays(wkStart, -7), lastWkEnd = addDays(wkStart, -1);
+  const lastWeekH = sum(all.filter((e) => e.date >= lastWkStart && e.date <= lastWkEnd));
+  const monthH = sum(all.filter((e) => e.date.slice(0, 7) === month));
+  const totalH = sum(all);
+  const r1 = (x) => Math.round(x * 10) / 10;
+
+  const byJobMap = {};
+  all.forEach((e) => { byJobMap[e.jobId] = (byJobMap[e.jobId] || 0) + e.hours; });
+  const byJob = Object.entries(byJobMap).map(([jid, h]) => ({ jid, h })).sort((a, b) => ((data.jobs.find((j) => j.id === a.jid) || {}).name || "").localeCompare((data.jobs.find((j) => j.id === b.jid) || {}).name || ""));
+
+  // Where hours went, week by week
+  const weekMap = {};
+  all.forEach((e) => {
+    const ws = weekStartOf(e.date);
+    const w = (weekMap[ws] = weekMap[ws] || { total: 0, jobs: {} });
+    w.total += e.hours; w.jobs[e.jobId] = (w.jobs[e.jobId] || 0) + e.hours;
+  });
+  const weeks = Object.entries(weekMap).map(([ws, v]) => ({
+    ws, total: v.total, jobs: Object.entries(v.jobs).map(([jid, h]) => ({ jid, h })).sort((a, b) => ((data.jobs.find((j) => j.id === a.jid) || {}).name || "").localeCompare((data.jobs.find((j) => j.id === b.jid) || {}).name || "")),
+  })).sort((a, b) => b.ws.localeCompare(a.ws));
+
+  const bookings = (data.schedule || []).filter((s) => s.crewId === sel.id && s.date >= todayStr()).sort((a, b) => a.date.localeCompare(b.date));
+
+  const SummaryCard = ({ label, hours }) => (
+    <Card style={{ flex: 1, textAlign: "center" }}>
+      <Eyebrow>{label}</Eyebrow>
+      <div style={{ fontFamily: font.num, fontWeight: 800, fontSize: 22 }}>{r1(hours)}h</div>
+      <div style={{ fontSize: 12, color: T.out, fontWeight: 700 }}>{fmt(hours * rate)}</div>
+    </Card>
+  );
+
+  return (
+    <>
+      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+        <Btn small kind="ghost" onClick={onBack}>‹ Back</Btn>
+        <Eyebrow>Employee detail</Eyebrow>
+      </div>
+
+      {/* Picker */}
+      <div style={{ display: "flex", gap: 8, overflowX: "auto", paddingBottom: 4 }}>
+        {roster.map((c) => (
+          <button key={c.id} onClick={() => setCrewId(c.id)}
+            style={{ flex: "0 0 auto", padding: "7px 13px", borderRadius: 999, cursor: "pointer", fontFamily: font.display, fontWeight: 700, fontSize: 13,
+              border: `1.5px solid ${sel.id === c.id ? T.ink : T.line}`, background: sel.id === c.id ? T.ink : "#fff", color: sel.id === c.id ? "#fff" : T.ink, whiteSpace: "nowrap" }}>
+            {c.name}{c.casual ? " ·c" : ""}
+          </button>
+        ))}
+      </div>
+
+      <Card>
+        <div style={{ fontFamily: font.display, fontWeight: 800, fontSize: 22 }}>{sel.name}</div>
+        <div style={{ fontSize: 13, color: T.sub, marginTop: 2 }}>${rate}/hr · {sel.casual ? "Casual (as-needed)" : "Permanent"}{sel.active === false ? " · inactive" : ""}</div>
+        <div style={{ marginTop: 10, padding: "8px 12px", background: T.inkSoft, borderRadius: 10, fontSize: 13 }}>
+          <span style={{ color: T.sub }}>Current assignment: </span>
+          <span style={{ fontWeight: 700, color: T.ink }}>{sel.jobId ? jobName(sel.jobId) : "Unassigned"}</span>
+        </div>
+      </Card>
+
+      {/* Hours × rate = cost summaries */}
+      <div style={{ display: "flex", gap: 8 }}>
+        <SummaryCard label="This week" hours={weekH} />
+        <SummaryCard label="Last week" hours={lastWeekH} />
+        <SummaryCard label="This month" hours={monthH} />
+      </div>
+
+      {bookings.length > 0 && (
+        <Card style={{ borderLeft: `4px solid ${T.in}` }}>
+          <Eyebrow color={T.in}>Upcoming bookings · {bookings.length}</Eyebrow>
+          {bookings.map((b, i) => (
+            <div key={i} style={{ display: "flex", justifyContent: "space-between", padding: "7px 0", borderBottom: i < bookings.length - 1 ? `1px solid ${T.line}` : "none" }}>
+              <span style={{ fontWeight: 700, fontSize: 14 }}>{jobName(b.jobId)}</span>
+              <span style={{ fontFamily: font.num, color: T.sub, fontSize: 13 }}>{shortDate(b.date)}</span>
+            </div>
+          ))}
+        </Card>
+      )}
+
+      <Card>
+        <Eyebrow>Day by day — project · hours · cost</Eyebrow>
+        {all.length === 0 ? <div style={{ fontSize: 14, color: T.sub, padding: 8 }}>No recorded days.</div> : (
+          <>
+            <div style={{ display: "flex", justifyContent: "space-between", padding: "4px 0 6px", fontSize: 11, color: T.sub, fontWeight: 700, textTransform: "uppercase", letterSpacing: ".04em", borderBottom: `1px solid ${T.line}` }}>
+              <span style={{ minWidth: 64 }}>Day</span>
+              <span style={{ flex: 1, textAlign: "center" }}>Project</span>
+              <span style={{ minWidth: 92, textAlign: "right" }}>Hours · cost</span>
+            </div>
+            {all.map((e, i) => (
+              <div key={e.id || i} style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", padding: "7px 0", borderBottom: i < all.length - 1 ? `1px solid ${T.line}` : "none" }}>
+                <span style={{ fontFamily: font.num, color: T.sub, fontSize: 13, minWidth: 64 }}>{shortDate(e.date)}</span>
+                <span style={{ fontWeight: 600, fontSize: 14, flex: 1, textAlign: "center", padding: "0 6px" }}>{jobName(e.jobId)}</span>
+                <span style={{ fontFamily: font.num, fontWeight: 700, fontSize: 14, minWidth: 92, textAlign: "right" }}>{e.hours}h · {fmt(e.hours * rate)}</span>
+              </div>
+            ))}
+          </>
+        )}
+      </Card>
+    </>
+  );
+}
+
+// ---------- ASSISTANT (Claude as in-app analyst / administrator) ----------
+function buildContext(data) {
+  const crew = (data.crew || []).map((c) => `${c.name} ($${c.rate}/hr, ${c.casual ? "casual" : "permanent"}${c.active === false ? ", inactive" : ""})`).join("; ");
+  const jobs = (data.jobs || []).map((j) => {
+    const es = (data.timeEntries || []).filter((e) => e.jobId === j.id);
+    const h = es.reduce((s, e) => s + e.hours, 0);
+    return `${j.name}: ${es.length} entries, ${Math.round(h * 10) / 10}h, revenue ${j.revenue ? "$" + j.revenue : "not set"}`;
+  }).join("; ");
+  const entries = (data.timeEntries || []).map((e) => {
+    const c = data.crew.find((x) => x.id === e.crewId); const j = data.jobs.find((x) => x.id === e.jobId);
+    return `${e.date},${c ? c.name : e.crewId},${j ? j.name : e.jobId},${e.hours}h`;
+  }).join("\n");
+  return `CREW: ${crew}\n\nJOBS (name: entries, hours, revenue): ${jobs}\n\nTIME ENTRIES (date,person,job,hours):\n${entries}`;
+}
+
+const ASSISTANT_SYSTEM =
+  "You are the analyst and administrator built into FieldLedger, a crew-scheduling and job-costing app for a small construction general contractor. " +
+  "Be concise, concrete, and practical — talk like a sharp office manager, not a chatbot. Use the data provided only. " +
+  "When asked to scan or check for issues, look for: a person logged as an email or odd name; a project that appears only once or twice (possible typo/duplicate of another site); impossible or suspicious hours (negative, zero, or over ~14 in a day); the same person/day entered twice; crew marked casual who are working full consistent weeks (or permanent crew who aren't); jobs with no revenue set; and anything that would distort labour cost. " +
+  "Return a short bulleted list — each item names the specific person/job/date and a one-line recommended fix. " +
+  "For questions, answer directly with numbers from the data. If something isn't in the data, say so. Keep replies under ~200 words.";
+
+function Assistant({ data }) {
+  const [msgs, setMsgs] = useState([]);
+  const [input, setInput] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState(null);
+
+  const ask = async (text) => {
+    if (!text.trim() || busy) return;
+    setErr(null); setBusy(true);
+    setMsgs((m) => [...m, { role: "user", text }]);
+    setInput("");
+    try {
+      const res = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: "claude-sonnet-4-6",
+          max_tokens: 1000,
+          system: ASSISTANT_SYSTEM,
+          messages: [{ role: "user", content: `${buildContext(data)}\n\n---\nREQUEST: ${text}` }],
+        }),
+      });
+      const json = await res.json();
+      const out = (json.content || []).filter((b) => b.type === "text").map((b) => b.text).join("\n").trim();
+      setMsgs((m) => [...m, { role: "ai", text: out || "(no response)" }]);
+    } catch (e) {
+      setErr("Couldn't reach the assistant. This works inside the Claude app; a deployed copy needs its own API key via a backend.");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const chips = ["Scan my data for errors or anything suspicious", "Which job is costing the most labour, and why?", "Who worked the most hours last week?", "Any crew whose casual/permanent setting looks wrong?"];
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+      <Card style={{ borderLeft: `4px solid ${T.hivis}` }}>
+        <Eyebrow color={T.hivis}>Assistant · analyst &amp; administrator</Eyebrow>
+        <div style={{ fontSize: 13, color: T.sub, marginTop: 4 }}>
+          Ask about your crew, jobs, and costs — or have it scan for data problems (misfiled jobs, odd hours, wrong rates). It reads your live ledger.
+        </div>
+      </Card>
+
+      {msgs.length === 0 && (
+        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+          {chips.map((c, i) => (
+            <button key={i} onClick={() => ask(c)} disabled={busy}
+              style={{ textAlign: "left", padding: "11px 13px", borderRadius: 12, border: `1.5px solid ${T.line}`, background: "#fff", cursor: "pointer", fontFamily: font.display, fontWeight: 600, fontSize: 14, color: T.ink }}>
+              {c}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {msgs.map((m, i) => (
+        <div key={i} style={{ display: "flex", justifyContent: m.role === "user" ? "flex-end" : "flex-start" }}>
+          <div style={{ maxWidth: "88%", padding: "10px 13px", borderRadius: 14,
+            background: m.role === "user" ? T.ink : "#fff", color: m.role === "user" ? "#fff" : T.ink,
+            border: m.role === "user" ? "none" : `1px solid ${T.line}`, fontSize: 14, lineHeight: 1.5, whiteSpace: "pre-wrap" }}>
+            {m.text}
+          </div>
+        </div>
+      ))}
+
+      {busy && <div style={{ fontSize: 13, color: T.sub, fontStyle: "italic" }}>Thinking…</div>}
+      {err && <Card style={{ borderLeft: `4px solid ${T.out}` }}><div style={{ fontSize: 13, color: T.out }}>{err}</div></Card>}
+
+      <div style={{ display: "flex", gap: 8, position: "sticky", bottom: 0, paddingTop: 4 }}>
+        <input style={{ ...inputStyle, flex: 1 }} value={input} placeholder="Ask the assistant…"
+          onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") ask(input); }} disabled={busy} />
+        <Btn onClick={() => ask(input)} disabled={busy}>Send</Btn>
+      </div>
+      <div style={{ fontSize: 11, color: T.sub }}>Powered by Claude. Reads your data to answer; nothing is changed without you.</div>
+    </div>
+  );
+}
+
+
+ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(FieldLedger));
+</script>
+</body>
+</html>
